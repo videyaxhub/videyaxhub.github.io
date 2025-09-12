@@ -1,41 +1,51 @@
 const videoGrid = document.getElementById("videoGrid");
 const reviewVideo = document.getElementById("reviewVideo");
-let reviewIndex = 0;
+
+// === REVIEW VIDEO AUTOPLAY 2 DETIK ===
+reviewVideo.play();
+setTimeout(() => {
+  reviewVideo.pause();
+}, 2000);
 
 function toggleReviewPlay() {
-  if (reviewVideo.paused) reviewVideo.play();
-  else reviewVideo.pause();
+  if (reviewVideo.paused) {
+    reviewVideo.play();
+  } else {
+    reviewVideo.pause();
+  }
 }
 
-// Put first video from short category as preview
-function playNextReview() {
-  const currentList = videosShort.concat(videosLong, videosPopular);
-  if (currentList.length === 0) return;
-  reviewVideo.src = currentList[reviewIndex].url;
-  reviewVideo.play();
-  reviewIndex = (reviewIndex + 1) % currentList.length;
-  setTimeout(playNextReview, 2000); // ganti tiap 2 detik
-}
-
-// Render video cards
+// === RENDER VIDEO CARDS ===
 function renderVideos(list) {
   videoGrid.innerHTML = "";
   list.forEach(video => {
     const card = document.createElement("div");
     card.className = "video-card";
     card.innerHTML = `
-      <video src="${video.url}" muted preload="metadata" playsinline></video>
+      <video muted preload="metadata" playsinline loading="lazy">
+        <source src="${video.preview}" type="video/mp4">
+      </video>
       <div class="play-btn">&#9658;</div>
     `;
+    card.addEventListener("mouseenter", () => {
+      card.querySelector("video").play().catch(() => {});
+    });
+    card.addEventListener("mouseleave", () => {
+      card.querySelector("video").pause();
+      card.querySelector("video").currentTime = 0;
+    });
     card.addEventListener("click", () => openModal(video.url));
     videoGrid.appendChild(card);
   });
 }
 
-// Modal popup
+// === MODAL POPUP ===
 const modal = document.createElement("div");
 modal.className = "modal";
-modal.innerHTML = `<span class="close">&times;</span><video controls autoplay playsinline></video>`;
+modal.innerHTML = `
+  <span class="close">&times;</span>
+  <video controls autoplay playsinline></video>
+`;
 document.body.appendChild(modal);
 
 const modalVideo = modal.querySelector("video");
@@ -53,16 +63,29 @@ modalClose.addEventListener("click", () => {
   modalVideo.src = "";
 });
 
-// Navigation buttons
+// === NAVIGATION BUTTONS ===
 function loadVideos(category) {
   document.querySelectorAll(".nav-buttons button").forEach(btn => btn.classList.remove("active"));
   document.querySelector(`.btn-${category}`).classList.add("active");
 
   if (category === "short") renderVideos(videosShort);
   if (category === "long") renderVideos(videosLong);
-  if (category === "popular") renderVideos(videosPopular);
+  if (category === "populer") renderVideos(videosPopular);
 }
 
-// Start
+// === DEFAULT LOAD ===
 loadVideos("short");
-playNextReview();
+
+// === SEARCH FILTER ===
+document.getElementById("searchInput").addEventListener("input", function () {
+  const query = this.value.toLowerCase();
+  const activeCategory = document.querySelector(".nav-buttons button.active").classList[0].replace("btn-", "");
+
+  let data = [];
+  if (activeCategory === "short") data = videosShort;
+  if (activeCategory === "long") data = videosLong;
+  if (activeCategory === "populer") data = videosPopular;
+
+  const filtered = data.filter(video => video.title.toLowerCase().includes(query));
+  renderVideos(filtered);
+});
