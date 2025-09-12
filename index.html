@@ -3,190 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MyVideoHub</title>
-  <style>
-    body {
-      background: #0a0a0a;
-      color: white;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    header {
-      background: linear-gradient(to right, red, orange, black);
-      padding: 10px;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-      font-weight: bold;
-    }
-    header .logo {
-      display: inline-block;
-      font-weight: bold;
-      font-size: 28px;
-      color: orange;
-    }
-    .category-buttons {
-      margin-top: 5px;
-    }
-    .category-buttons button {
-      background: #222;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      margin: 0 3px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .category-buttons button.active {
-      background: red;
-    }
-    .search-box {
-      display: block;
-      margin: 10px auto;
-      padding: 5px;
-      border: none;
-      border-radius: 5px;
-      width: 60%;
-      text-align: center;
-      background: #222;
-      color: white;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      padding: 10px;
-    }
-    .card {
-      background: #1a1a1a;
-      border-radius: 10px;
-      overflow: hidden;
-      text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s ease-in-out;
-    }
-    .card:hover {
-      transform: scale(1.03);
-    }
-    .card video {
-      width: 100%;
-      height: 120px;
-      object-fit: cover;
-    }
-    footer {
-      text-align: center;
-      font-size: 12px;
-      margin: 10px 0;
-      color: gray;
-    }
-    #age-gate {
-      background: rgba(0, 0, 0, 0.9);
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      z-index: 9999;
-    }
-    #age-gate button {
-      background: red;
-      border: none;
-      padding: 8px 15px;
-      margin: 5px;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+  <title>Naughty Night Hub</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="videos_short.js" defer></script>
+  <script src="videos_long.js" defer></script>
+  <script src="videos_popular.js" defer></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
   <!-- Age Gate -->
   <div id="age-gate">
     <h2>Are You 18+?</h2>
-    <p>You must be 18 years or older to enter this site.</p>
-    <button onclick="enterSite()">Yes, I am 18+</button>
-    <button onclick="window.location.href='https://google.com'">No, take me back</button>
+    <p>You must be 18 years old or older to enter this site.</p>
+    <button id="yes-btn">Yes, I am 18+</button>
+    <button id="no-btn">No, take me back</button>
   </div>
 
-  <header>
-    <div class="logo">🔥 MyVideoHub</div>
-    <div class="category-buttons">
-      <button id="btnShort" class="active" onclick="switchCategory('short')">Short</button>
-      <button id="btnLong" onclick="switchCategory('long')">Long</button>
-      <button id="btnPopular" onclick="switchCategory('popular')">Popular</button>
+  <!-- Main Content -->
+  <div id="main-content" style="display:none;">
+    <header>
+      <div class="logo">🔥 Naughty Night Hub</div>
+      <div class="controls">
+        <button class="toggle-btn active" data-category="short">Short</button>
+        <button class="toggle-btn" data-category="long">Long</button>
+        <button class="toggle-btn" data-category="popular">Popular</button>
+      </div>
+    </header>
+
+    <div class="search-container">
+      <input type="text" id="search-input" placeholder="Search videos...">
     </div>
-    <input type="text" class="search-box" placeholder="Search videos..." oninput="filterVideos(this.value)">
-  </header>
 
-  <div class="grid" id="videoGrid"></div>
+    <div id="video-grid"></div>
 
-  <footer>
-    <p>⚠ Disclaimer: All videos are for entertainment purposes only.</p>
-    <p><a href="#" style="color:gray;">Privacy Policy</a> | <a href="#" style="color:gray;">Terms of Service</a></p>
-    <p>© 2025 MyVideoHub</p>
-  </footer>
+    <footer>
+      <p>⚠ Disclaimer: All content is for entertainment purposes only.</p>
+      <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+      <p>© 2025 MyVideoHub</p>
+    </footer>
+  </div>
 
-  <script src="videos_short.js"></script>
-  <script src="videos_long.js"></script>
-  <script src="videos_popular.js"></script>
-  <script>
-    let currentCategory = 'short';
-    let allVideos = [];
-
-    function enterSite() {
-      document.getElementById('age-gate').style.display = 'none';
-      loadVideos();
-    }
-
-    function loadVideos() {
-      if (currentCategory === 'short') allVideos = videosShort;
-      if (currentCategory === 'long') allVideos = videosLong;
-      if (currentCategory === 'popular') allVideos = videosPopular;
-      renderGrid(allVideos);
-    }
-
-    function renderGrid(videos) {
-      const grid = document.getElementById('videoGrid');
-      grid.innerHTML = '';
-      videos.forEach(video => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <video muted preload="metadata" onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;">
-            <source src="${video.url}" type="video/mp4">
-          </video>
-          <p>${video.title}</p>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function switchCategory(cat) {
-      currentCategory = cat;
-      document.getElementById('btnShort').classList.remove('active');
-      document.getElementById('btnLong').classList.remove('active');
-      document.getElementById('btnPopular').classList.remove('active');
-      document.getElementById('btn' + capitalize(cat)).classList.add('active');
-      loadVideos();
-    }
-
-    function filterVideos(query) {
-      const filtered = allVideos.filter(v => v.title.toLowerCase().includes(query.toLowerCase()));
-      renderGrid(filtered);
-    }
-
-    function capitalize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
-
-    // Load default category after entering site
-  </script>
+  <!-- Video Modal -->
+  <div id="video-modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <video id="modal-video" controls></video>
+    </div>
+  </div>
 </body>
 </html>
