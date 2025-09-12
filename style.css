@@ -1,81 +1,160 @@
+/* ============ GLOBAL ============ */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #111;
+  background: #0f0f0f;
   color: white;
 }
 
-.navbar {
-  background: #1a1a1a;
+/* ============ HEADER ============ */
+header {
+  background: #181818;
+  padding: 12px 20px;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 15px 20px;
-  border-bottom: 2px solid #ff4747;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #ff4747;
-}
-
-.menu button {
-  background: none;
-  border: none;
-  color: white;
-  margin-left: 10px;
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 6px;
-}
-
-.menu button.active {
-  background: #ff4747;
-}
-
-.section {
-  padding: 15px;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  text-align: center;
   gap: 10px;
 }
 
-.card {
-  position: relative;
-  background: #222;
-  border-radius: 10px;
-  overflow: hidden;
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.logo-circle {
+  width: 40px;
+  height: 40px;
+  background: #ff4444;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.logo-subtext {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.nav-buttons button {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 1rem;
+  padding: 6px 10px;
   cursor: pointer;
-  transition: transform 0.2s ease;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.nav-buttons button.active {
+  color: white;
+  border-bottom: 2px solid #ff4444;
 }
 
-.card video {
+/* ============ REVIEW VIDEO ============ */
+.review-video-container {
+  position: relative;
+  width: 100%;
+  max-height: 300px;
+  overflow: hidden;
+}
+
+.review-video-container video {
   width: 100%;
   display: block;
-  border-radius: 10px;
+  border-radius: 0;
 }
 
-.play-button {
+.review-play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 40px;
+  font-size: 3rem;
   color: white;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
-  padding: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
 }
-.card-title {
-  padding: 5px;
-  font-size: 0.85rem;
+
+/* ============ VIDEO GRID ============ */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  padding: 15px;
+}
+
+.video-card {
+  position: relative;
+  cursor: pointer;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-card img {
+  width: 100%;
+  display: block;
+  border-radius: 8px;
+}
+
+.video-card .play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  padding: 4px 8px;
+}
+
+/* ============ MODAL ============ */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal video {
+  width: 90%;
+  max-width: 600px;
+  border-radius: 10px;
+}
+
+.modal .close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  padding: 20px 0;
 }
