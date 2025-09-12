@@ -1,4 +1,4 @@
-[
+const videosPopular = [
   {
     "title": "He looks like an inner peace that contradicts reality \ud83d\ude2d",
     "src": "https://cdn.videy.co/pJUHLkt51.mp4"
@@ -167,4 +167,4 @@
     "title": "I'm thirsty and hungry\ud83d\ude0b\ud83d\ude0c",
     "src": "https://cdn.videy.co/P4XsMvTt1.mp4"
   }
-]
+];
