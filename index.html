@@ -1,48 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Video Hub</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VideoHub</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Age Gate -->
-  <div id="age-gate">
-    <div class="age-box">
-      <h1>Are you 18+?</h1>
-      <p>This site contains adult content. By continuing you confirm you are at least 18 years old and agree to our privacy policy.</p>
-      <button onclick="enterSite()">Yes, I'm 18+</button>
-      <button onclick="window.location.href='https://google.com'">No, Take me away</button>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <header>
+  <!-- Navbar -->
+  <header class="navbar">
     <div class="logo">🔥 VideoHub</div>
-    <input type="text" id="search-input" placeholder="Search..." oninput="searchVideos()" />
-    <div class="controls">
-      <button class="active" onclick="showCategory('short')">Short</button>
-      <button onclick="showCategory('long')">Long</button>
-      <button onclick="showCategory('popular')">Popular</button>
+    <div class="nav-buttons">
+      <button class="btn active" onclick="switchCategory('short')">Short</button>
+      <button class="btn" onclick="switchCategory('long')">Long</button>
+      <button class="btn" onclick="switchCategory('popular')">Popular</button>
     </div>
   </header>
 
-  <main id="video-grid"></main>
-
-  <!-- Modal -->
-  <div id="video-modal" onclick="closeModal()">
-    <video id="modal-video" controls></video>
+  <!-- Search -->
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search videos..." onkeyup="filterVideos()">
   </div>
 
+  <!-- Grid -->
+  <main>
+    <div id="video-grid" class="video-grid"></div>
+  </main>
+
+  <!-- Disclaimer -->
   <footer>
-    <p>© 2025 VideoHub | <a href="#">Privacy Policy</a> | <a href="#">Disclaimer</a></p>
+    <p>Disclaimer: All videos are for entertainment only. This site does not host or store any media files; it links to external sources.</p>
+    <p>© 2025 VideoHub</p>
   </footer>
 
-  <!-- JS Files -->
+  <!-- Modal -->
+  <div id="videoModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <video id="modalVideo" controls autoplay></video>
+    </div>
+  </div>
+
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
-  <script src="videos_popular.js"></script>
-  <script src="script.js"></script>
+  <script src="videos_populer.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
