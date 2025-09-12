@@ -64,5 +64,41 @@ function loadVideos(category) {
   if (category === "popular") renderVideos(videosPopular);
 }
 
+// Render video cards
+function renderVideos(list) {
+  videoGrid.innerHTML = "";
+  list.forEach(video => {
+    const card = document.createElement("div");
+    card.className = "video-card";
+
+    // Gunakan video preview
+    card.innerHTML = `
+      <video muted preload="metadata" class="preview">
+        <source src="${video.url}" type="video/mp4">
+      </video>
+      <div class="play-btn">&#9658;</div>
+    `;
+
+    const preview = card.querySelector("video");
+
+    // Play otomatis tapi stop di detik ke-3
+    preview.addEventListener("play", () => {
+      setTimeout(() => preview.pause(), 3000);
+    });
+
+    // Mulai play saat hover (atau tap di HP)
+    card.addEventListener("mouseenter", () => preview.play());
+    card.addEventListener("mouseleave", () => {
+      preview.pause();
+      preview.currentTime = 0; // reset supaya play dari awal lagi
+    });
+
+    // Klik = buka modal full video
+    card.addEventListener("click", () => openModal(video.url));
+
+    videoGrid.appendChild(card);
+  });
+}
+
 // Default load
 loadVideos("short");
