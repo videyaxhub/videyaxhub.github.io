@@ -1,123 +1,104 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #111;
+  background: #000;
   color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
+/* ====== HEADER ====== */
 header {
+  background: linear-gradient(to right, #b80000, #ff5a00);
   text-align: center;
-  padding: 20px;
+  padding: 20px 10px;
 }
 
-.logo-row {
+.logo {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .logo-circle {
-  background: white;
-  color: black;
+  background: #ff0000;
+  color: white;
   font-weight: bold;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 8px;
+  border-radius: 5px;
+  padding: 4px 6px;
+  margin-right: 6px;
 }
 
 .logo-text {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: bold;
 }
 
 .logo-subtext {
-  font-size: 14px;
-  color: #aaa;
-  margin-top: 5px;
+  font-size: 13px;
+  color: #ddd;
+  margin: 6px 0;
 }
 
-.nav-buttons {
-  margin-top: 10px;
-}
-
+/* ====== BUTTON SHORT/LONG ====== */
 .nav-buttons button {
   background: #333;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 6px 14px;
   margin: 0 3px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-buttons button:hover {
+  background: #ff3333;
+  transform: translateY(-1px);
 }
 
 .nav-buttons button.active {
-  background: #666;
+  background: #ff0000;
 }
 
-.review-video-container {
-  position: relative;
-  max-width: 600px;
-  width: 100%;
-  margin: 10px auto;
-  background: black;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.review-video-container video {
-  width: 100%;
-  display: block;
-  border-radius: 10px;
-}
-
-.review-play-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 50%;
-  font-size: 30px;
-  padding: 10px 14px;
-  cursor: pointer;
-}
-
+/* ====== SEARCH BAR ====== */
 .search-container {
-  margin: 10px;
-  width: 90%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
 }
 
 .search-container input {
-  width: 100%;
-  padding: 8px;
-  border-radius: 5px;
-  border: none;
+  width: 90%;
+  max-width: 500px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ff0000;
+  background: #111;
+  color: white;
   outline: none;
+  transition: 0.2s;
 }
 
+.search-container input:focus {
+  box-shadow: 0 0 6px #ff0000;
+}
+
+/* ====== VIDEO GRID ====== */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 10px;
   width: 95%;
-  margin: 20px 0;
+  margin: 15px auto;
 }
 
 .video-card {
   position: relative;
-  background: #222;
+  background: #111;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s;
 }
 
 .video-card:hover {
@@ -129,6 +110,7 @@ header {
   display: block;
 }
 
+/* ====== PLAY BUTTON ====== */
 .play-btn {
   position: absolute;
   top: 50%;
@@ -138,8 +120,15 @@ header {
   background: rgba(0, 0, 0, 0.5);
   padding: 6px 10px;
   border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
 }
 
+.video-card:hover .play-btn {
+  opacity: 1;
+}
+
+/* ====== MODAL VIDEO ====== */
 .modal {
   display: none;
   position: fixed;
@@ -156,6 +145,7 @@ header {
 .modal video {
   max-width: 90%;
   max-height: 80%;
+  border-radius: 10px;
 }
 
 .modal .close {
@@ -167,9 +157,10 @@ header {
   color: white;
 }
 
+/* ====== FOOTER ====== */
 footer {
   font-size: 12px;
-  color: #888;
+  color: #aaa;
   text-align: center;
-  margin-bottom: 20px;
+  padding: 15px 10px;
 }
