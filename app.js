@@ -1,65 +1,66 @@
-const container = document.getElementById('video-container');
-const modal = document.getElementById('video-modal');
-const modalVideo = document.getElementById('modal-video');
-const closeModal = document.getElementById('close-modal');
+const videoGrid = document.getElementById("videoGrid");
+const popularGrid = document.getElementById("popularGrid");
+const searchInput = document.getElementById("searchInput");
+const modal = document.getElementById("videoModal");
+const modalVideo = document.getElementById("modalVideo");
+const closeBtn = document.querySelector(".close");
 
-function renderVideos(category) {
-  container.innerHTML = '';
-  let data = [];
-  if (category === 'short') data = videos_short;
-  if (category === 'long') data = videosLong;
-  if (category === 'popular') data = videosPopular;
+let currentVideos = videosShort;
 
-  data.forEach(video => {
-    const card = document.createElement('div');
-    card.className = 'card';
+function renderGrid(container, videos) {
+  container.innerHTML = "";
+  videos.forEach(video => {
+    const card = document.createElement("div");
+    card.classList.add("video-card");
     card.innerHTML = `
-      <video preload="metadata" muted playsinline loop loading="lazy">
-        <source src="${video.url}" type="video/mp4">
-      </video>
-      <p style="padding: 5px;">${video.title}</p>
+      <video src="${video.url}" muted preload="metadata"></video>
+      <div class="play-btn">▶</div>
+      <div class="video-title">${video.title}</div>
     `;
-    card.addEventListener('click', () => openModal(video.url));
+    card.addEventListener("click", () => openModal(video.url));
     container.appendChild(card);
   });
 }
 
 function openModal(url) {
-  modal.style.display = 'flex';
+  modal.style.display = "flex";
   modalVideo.src = url;
   modalVideo.play();
 }
 
-closeModal.addEventListener('click', () => {
-  modal.style.display = 'none';
+closeBtn.addEventListener("click", closeModal);
+window.addEventListener("click", e => { if (e.target === modal) closeModal(); });
+
+function closeModal() {
+  modal.style.display = "none";
   modalVideo.pause();
-  modalVideo.src = '';
-});
-
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderVideos(btn.dataset.category);
-  });
-});
-
-// Load default category
-renderVideos('short');
-
-function displayVideos(list) {
-  container.innerHTML = '';
-  list.forEach(video => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <video preload="metadata" muted playsinline loop poster="${video.poster || ''}">
-        <source src="${video.url}" type="video/mp4">
-      </video>
-      <div class="play-btn"></div>
-      <p>${video.title}</p>
-    `;
-    card.addEventListener('click', () => openModal(video.url));
-    container.appendChild(card);
-  });
+  modalVideo.src = "";
 }
+
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const filtered = currentVideos.filter(v => v.title.toLowerCase().includes(searchTerm));
+  renderGrid(videoGrid, filtered);
+});
+
+document.getElementById("shortBtn").addEventListener("click", () => {
+  currentVideos = videosShort;
+  renderGrid(videoGrid, currentVideos);
+  setActiveBtn("shortBtn");
+});
+
+document.getElementById("longBtn").addEventListener("click", () => {
+  currentVideos = videosLong;
+  renderGrid(videoGrid, currentVideos);
+  setActiveBtn("longBtn");
+});
+
+function setActiveBtn(activeId) {
+  document.getElementById("shortBtn").classList.remove("active");
+  document.getElementById("longBtn").classList.remove("active");
+  document.getElementById(activeId).classList.add("active");
+}
+
+// Render awal
+renderGrid(popularGrid, videosPopular);
+renderGrid(videoGrid, currentVideos);
