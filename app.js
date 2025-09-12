@@ -1,45 +1,70 @@
-function renderVideos(category) {
-  let data = [];
-  if (category === "short") data = videos_short;
-  if (category === "long") data = videos_long;
-  if (category === "popular") data = videos_popular;
+const container = document.getElementById('videoContainer');
+const searchInput = document.getElementById('searchInput');
+const btnShort = document.getElementById('btnShort');
+const btnLong = document.getElementById('btnLong');
 
-  const container = document.getElementById("videoGrid");
-  container.innerHTML = "";
+let currentList = videosShort;
 
-  data.forEach(video => {
-    const card = document.createElement("div");
-    card.classList.add("video-card");
+// Display videos
+function displayVideos(list) {
+  container.innerHTML = '';
+  list.forEach(video => {
+    const card = document.createElement('div');
+    card.className = 'card';
     card.innerHTML = `
-      <video src="${video.url}" muted></video>
+      <video preload="metadata" muted playsinline loop>
+        <source src="${video.url}" type="video/mp4">
+      </video>
+      <div class="play-btn"></div>
       <p>${video.title}</p>
     `;
-    card.addEventListener("click", () => openModal(video.url));
+    card.addEventListener('click', () => openModal(video.url));
     container.appendChild(card);
   });
-
-  // Update active tab
-  document.querySelectorAll(".nav-links li").forEach(li => li.classList.remove("active"));
-  document.querySelector(`.nav-links li[onclick="renderVideos('${category}')"]`).classList.add("active");
 }
 
-function openModal(videoUrl) {
-  const modal = document.getElementById("videoModal");
-  const modalVideo = document.getElementById("modalVideo");
-  modal.style.display = "block";
-  modalVideo.src = videoUrl;
+// Open modal
+const modal = document.getElementById('videoModal');
+const modalVideo = document.getElementById('modalVideo');
+const closeBtn = document.querySelector('.close');
+
+function openModal(url) {
+  modal.style.display = 'flex';
+  modalVideo.src = url;
   modalVideo.play();
 }
 
-function closeModal() {
-  const modal = document.getElementById("videoModal");
-  const modalVideo = document.getElementById("modalVideo");
-  modal.style.display = "none";
+closeBtn.onclick = () => {
+  modal.style.display = 'none';
   modalVideo.pause();
-  modalVideo.src = "";
-}
-
-// Load default category
-window.onload = () => {
-  renderVideos("popular");
+  modalVideo.src = '';
 };
+
+window.onclick = (e) => {
+  if (e.target === modal) closeBtn.click();
+};
+
+// Search
+searchInput.addEventListener('input', () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  const filtered = currentList.filter(v => v.title.toLowerCase().includes(searchTerm));
+  displayVideos(filtered);
+});
+
+// Switch buttons
+btnShort.addEventListener('click', () => {
+  btnShort.classList.add('active');
+  btnLong.classList.remove('active');
+  currentList = videosShort;
+  displayVideos(currentList);
+});
+
+btnLong.addEventListener('click', () => {
+  btnLong.classList.add('active');
+  btnShort.classList.remove('active');
+  currentList = videosLong;
+  displayVideos(currentList);
+});
+
+// Init
+displayVideos(currentList);
