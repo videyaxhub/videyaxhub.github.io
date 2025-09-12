@@ -7,43 +7,44 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="logo">🔥 VideoHub</div>
-    <div class="nav-buttons">
-      <button class="btn active" onclick="switchCategory('short')">Short</button>
-      <button class="btn" onclick="switchCategory('long')">Long</button>
-      <button class="btn" onclick="switchCategory('popular')">Popular</button>
+  <header class="site-header">
+    <div class="logo-container">
+      <div class="logo-circle">VH</div>
+      <div class="logo-text">
+        <h1>VideoHub</h1>
+        <span>Short & Long clips — streaming from CDN</span>
+      </div>
     </div>
+    <nav class="nav-buttons">
+      <button class="tab-btn active" data-category="short">Short</button>
+      <button class="tab-btn" data-category="long">Long</button>
+      <button class="tab-btn" data-category="popular">Popular</button>
+    </nav>
   </header>
 
-  <!-- Search -->
-  <div class="search-container">
-    <input type="text" id="search" placeholder="Search videos..." onkeyup="filterVideos()">
-  </div>
-
-  <!-- Grid -->
   <main>
-    <div id="video-grid" class="video-grid"></div>
+    <div class="search-container">
+      <input type="text" id="search" placeholder="Search videos...">
+    </div>
+    <div id="video-container" class="video-grid"></div>
+    <p class="disclaimer">
+      Disclaimer: All videos are for entertainment only. This site does not host or store any media files; it links to external sources.<br>
+      Privacy: No personal data is collected. Basic localStorage may be used for UX only (age gate).
+    </p>
   </main>
 
-  <!-- Disclaimer -->
-  <footer>
-    <p>Disclaimer: All videos are for entertainment only. This site does not host or store any media files; it links to external sources.</p>
-    <p>© 2025 VideoHub</p>
-  </footer>
-
   <!-- Modal -->
-  <div id="videoModal" class="modal">
+  <div id="video-modal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal()">&times;</span>
-      <video id="modalVideo" controls autoplay></video>
+      <span id="close-modal">&times;</span>
+      <video id="modal-video" controls autoplay></video>
     </div>
   </div>
 
+  <!-- JS -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
-  <script src="videos_populer.js"></script>
-  <script src="script.js"></script>
+  <script src="videos_popular.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
