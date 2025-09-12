@@ -34,23 +34,33 @@ function renderVideos() {
     const videoEl = card.querySelector("video");
     const spinner = card.querySelector(".loading-spinner");
 
+    // ✅ Ambil thumbnail otomatis
     videoEl.addEventListener("loadedmetadata", () => {
-      videoEl.currentTime = videoEl.duration > 1 ? 1 : 0;
+      if (videoEl.duration > 1) {
+        videoEl.currentTime = 1;
+      } else {
+        videoEl.currentTime = 0;
+      }
     });
 
     videoEl.addEventListener("seeked", () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = videoEl.videoWidth;
-      canvas.height = videoEl.videoHeight;
-      const ctx = canvas.getContext("2d");
-      ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
-      const thumbnail = canvas.toDataURL("image/jpeg");
-      videoEl.setAttribute("poster", thumbnail);
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = videoEl.videoWidth;
+        canvas.height = videoEl.videoHeight;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+        videoEl.setAttribute("poster", canvas.toDataURL("image/jpeg"));
+      } catch (err) {
+        console.warn("Thumbnail capture failed:", err);
+      }
       spinner.style.display = "none";
       videoEl.pause();
-      videoEl.src = ""; // hentikan load video
+      videoEl.removeAttribute("src"); // hentikan load video
+      videoEl.load();
     }, { once: true });
 
+    // ✅ Modal play
     card.querySelector(".play-btn").addEventListener("click", () => openModal(video.url));
     videoGrid.appendChild(card);
   });
@@ -59,7 +69,10 @@ function renderVideos() {
 function openModal(url) {
   modal.style.display = "flex";
   modalVideo.src = url;
-  modalVideo.play();
+  modalVideo.load();
+  modalVideo.play().catch(() => {
+    console.warn("Autoplay blocked, user must press play");
+  });
 }
 
 function closeModal() {
