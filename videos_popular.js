@@ -1,4 +1,4 @@
-const videosPopular = [
+const videos_popular = [
   { title: "She does it again", url: "https://cdn.videy.co/Vdghj3qe1.mp4" },
   { title: "1st day at work", url: "https://cdn.videy.co/9RRDFBCg1.mp4" },
   { title: "Wake wakey", url: "https://cdn.videy.co/HQ2HFg1n1.mp4" },
