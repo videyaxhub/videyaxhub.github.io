@@ -1,70 +1,45 @@
-let currentCategory = "short";
-let allVideos = [];
+function renderVideos(category) {
+  let data = [];
+  if (category === "short") data = videos_short;
+  if (category === "long") data = videos_long;
+  if (category === "popular") data = videos_popular;
 
-function switchCategory(category) {
-  currentCategory = category;
-  document.querySelectorAll(".btn").forEach(btn => btn.classList.remove("active"));
-  document.querySelector(`.btn:nth-child(${category === "short" ? 1 : category === "long" ? 2 : 3})`).classList.add("active");
-  loadVideos();
-}
+  const container = document.getElementById("videoGrid");
+  container.innerHTML = "";
 
-function loadVideos() {
-  if (currentCategory === "short") {
-    allVideos = videos_short;
-  } else if (currentCategory === "long") {
-    allVideos = videos_long;
-  } else {
-    allVideos = videos_populer;
-  }
-  renderVideos(allVideos);
-}
-
-function renderVideos(videoList) {
-  const grid = document.getElementById("video-grid");
-  grid.innerHTML = "";
-
-  videoList.forEach(video => {
+  data.forEach(video => {
     const card = document.createElement("div");
-    card.className = "video-card";
-
+    card.classList.add("video-card");
     card.innerHTML = `
-      <video muted preload="metadata">
-        <source src="${video.url}#t=0,1" type="video/mp4">
-      </video>
-      <div class="video-title">${video.title}</div>
+      <video src="${video.url}" muted></video>
+      <p>${video.title}</p>
     `;
-
-    // Preview Play on Hover
-    const vidEl = card.querySelector("video");
-    card.addEventListener("mouseenter", () => vidEl.play());
-    card.addEventListener("mouseleave", () => { vidEl.pause(); vidEl.currentTime = 0; });
-
-    // Play Modal on Click
     card.addEventListener("click", () => openModal(video.url));
-
-    grid.appendChild(card);
+    container.appendChild(card);
   });
+
+  // Update active tab
+  document.querySelectorAll(".nav-links li").forEach(li => li.classList.remove("active"));
+  document.querySelector(`.nav-links li[onclick="renderVideos('${category}')"]`).classList.add("active");
 }
 
-function filterVideos() {
-  const query = document.getElementById("search").value.toLowerCase();
-  const filtered = allVideos.filter(v => v.title.toLowerCase().includes(query));
-  renderVideos(filtered);
-}
-
-function openModal(url) {
+function openModal(videoUrl) {
   const modal = document.getElementById("videoModal");
   const modalVideo = document.getElementById("modalVideo");
-  modalVideo.src = url;
-  modal.style.display = "flex";
+  modal.style.display = "block";
+  modalVideo.src = videoUrl;
+  modalVideo.play();
 }
 
 function closeModal() {
   const modal = document.getElementById("videoModal");
   const modalVideo = document.getElementById("modalVideo");
-  modalVideo.pause();
   modal.style.display = "none";
+  modalVideo.pause();
+  modalVideo.src = "";
 }
 
 // Load default category
-window.onload = () => loadVideos();
+window.onload = () => {
+  renderVideos("popular");
+};
