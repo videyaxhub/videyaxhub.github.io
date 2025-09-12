@@ -2,224 +2,144 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VideoHub</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #000;
-      color: white;
-    }
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(90deg, #ff3c00, #ff6f00);
-      padding: 10px 20px;
-    }
-    .logo {
-      font-size: 22px;
-      font-weight: bold;
-    }
-    nav button {
-      background: transparent;
-      border: none;
-      color: white;
-      font-size: 16px;
-      margin-left: 10px;
-      cursor: pointer;
-      padding: 6px 12px;
-      border-radius: 5px;
-      transition: background 0.2s;
-    }
-    nav button.active {
-      background: red;
-    }
-    .search-box {
-      display: flex;
-      justify-content: center;
-      margin: 10px 0;
-    }
-    .search-box input {
-      width: 80%;
-      max-width: 500px;
-      padding: 8px;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      font-size: 16px;
-    }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 10px;
-      padding: 15px;
-    }
-    .video-card {
-      background: #111;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s;
-    }
-    .video-card:hover {
-      transform: scale(1.03);
-    }
-    .video-card canvas {
-      width: 100%;
-      height: 150px;
-      display: block;
-      background: #000;
-    }
-    .video-title {
-      font-size: 14px;
-      padding: 8px;
-      text-align: center;
-      color: #ddd;
-    }
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: #888;
-      margin: 20px 0;
-    }
+    body { background: #000; color: #fff; margin: 0; font-family: Arial; }
+    header { display: flex; justify-content: space-between; padding: 10px 20px; background: #ff6600; }
+    .logo { font-weight: bold; font-size: 1.5em; }
+    nav button { background: none; border: none; color: #fff; cursor: pointer; margin: 0 5px; font-size: 1em; }
+    .grid-slider { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 20px; }
+    .card { position: relative; cursor: pointer; border-radius: 10px; overflow: hidden; background: #111; transition: transform 0.3s; }
+    .card video { width: 100%; height: auto; display: block; object-fit: cover; }
+    .card-title { padding: 5px; text-align: center; font-size: 0.9em; }
+    .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); border-radius: 50%; padding: 10px; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 999; }
+    .modal.active { display: flex; }
+    .modal-content { position: relative; width: 80%; max-width: 900px; }
+    .modal iframe { width: 100%; height: 500px; border: none; border-radius: 10px; }
+    .modal-close { position: absolute; top: -40px; right: 0; font-size: 2em; color: white; background: none; border: none; cursor: pointer; }
   </style>
 </head>
 <body>
-
   <header>
     <div class="logo">🔥 VideoHub</div>
     <nav>
-      <button id="shortBtn" class="active">Short</button>
-      <button id="longBtn">Long</button>
-      <button id="popularBtn">Popular</button>
+      <button onclick="loadCategory('short')">Short</button>
+      <button onclick="loadCategory('long')">Long</button>
+      <button onclick="loadCategory('popular')">Popular</button>
     </nav>
   </header>
 
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search videos...">
+  <div class="grid-slider" id="slider"></div>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="modal-close" aria-label="Close Video">&times;</button>
+      <iframe id="modal-iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
   </div>
 
-  <main class="video-grid" id="videoGrid"></main>
-
-  <footer>
-    <p>Disclaimer: All videos are for entertainment only. This site does not host or store any media files; it links to external sources.</p>
-    <p>© 2025 VideoHub</p>
-  </footer>
-
-  <!-- Load video lists -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
-
   <script>
-    let currentList = videosShort;
+  let currentCategory = "short";
+  let videos = [];
+  let allPreviewVideos = [];
 
-    async function renderVideos(list) {
-      const grid = document.getElementById("videoGrid");
-      grid.innerHTML = "";
+  function loadCategory(cat) {
+    currentCategory = cat;
+    if (cat === "short") videos = videosShort;
+    if (cat === "long") videos = videosLong;
+    if (cat === "popular") videos = videosPopular;
+    renderGrid(videos);
+  }
 
-      for (const v of list) {
-        const card = document.createElement("div");
-        card.className = "video-card";
+  function renderGrid(list) {
+    const slider = document.getElementById("slider");
+    slider.innerHTML = "";
+    allPreviewVideos = [];
 
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        await captureThumbnail(v.url, canvas, ctx);
+    list.forEach(movie => {
+      const card = document.createElement("div");
+      card.className = "card";
 
-        const title = document.createElement("div");
-        title.className = "video-title";
-        title.textContent = v.title;
+      // Video preview (lazy load)
+      const vid = document.createElement("video");
+      vid.setAttribute("preload", "metadata");
+      vid.muted = true;
+      vid.playsInline = true;
+      vid.loop = true;
+      vid.dataset.src = movie.video + "#t=0,1"; // simpan url di data-src
+      card.appendChild(vid);
+      allPreviewVideos.push(vid);
 
-        card.appendChild(canvas);
-        card.appendChild(title);
-        card.onclick = () => window.open(v.url, "_blank");
+      const playBtn = document.createElement("div");
+      playBtn.className = "play-btn";
+      playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="40" height="40"><path fill="white" d="M8 5v14l11-7z"/></svg>`;
+      card.appendChild(playBtn);
 
-        grid.appendChild(card);
-      }
-    }
+      const title = document.createElement("div");
+      title.className = "card-title";
+      title.textContent = movie.title;
+      card.appendChild(title);
 
-    async function captureThumbnail(url, canvas, ctx) {
-      return new Promise((resolve) => {
-        const video = document.createElement("video");
-        video.src = url;
-        video.crossOrigin = "anonymous";
-        video.muted = true;
-        video.preload = "auto";
-        video.playsInline = true;
-
-        video.addEventListener("loadeddata", () => {
-          try {
-            video.currentTime = Math.min(1, video.duration / 2);
-          } catch {
-            fallbackThumbnail(ctx, canvas);
-            resolve();
-          }
-        });
-
-        video.addEventListener("seeked", () => {
-          canvas.width = 320;
-          canvas.height = 180;
-          try {
-            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-          } catch {
-            fallbackThumbnail(ctx, canvas);
-          }
-          video.remove();
-          resolve();
-        });
-
-        video.onerror = () => {
-          fallbackThumbnail(ctx, canvas);
-          resolve();
-        };
-      });
-    }
-
-    function fallbackThumbnail(ctx, canvas) {
-      canvas.width = 320;
-      canvas.height = 180;
-      ctx.fillStyle = "#000";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#fff";
-      ctx.font = "40px Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText("▶", canvas.width / 2, canvas.height / 2);
-    }
-
-    // Search
-    document.getElementById("searchInput").addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      const filtered = currentList.filter(v => v.title.toLowerCase().includes(term));
-      renderVideos(filtered);
+      card.onclick = () => openModal(movie.video);
+      slider.appendChild(card);
     });
 
-    // Nav buttons
-    document.getElementById("shortBtn").onclick = () => switchCategory("short");
-    document.getElementById("longBtn").onclick = () => switchCategory("long");
-    document.getElementById("popularBtn").onclick = () => switchCategory("popular");
+    lazyLoadVideos();
+  }
 
-    function switchCategory(cat) {
-      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
-      if (cat === "short") {
-        currentList = videosShort;
-        document.getElementById("shortBtn").classList.add("active");
-      } else if (cat === "long") {
-        currentList = videosLong;
-        document.getElementById("longBtn").classList.add("active");
-      } else {
-        currentList = videosPopular;
-        document.getElementById("popularBtn").classList.add("active");
-      }
-      renderVideos(currentList);
-    }
+  function lazyLoadVideos() {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          if (!video.src) {
+            video.src = video.dataset.src;
+            video.play().catch(() => {});
+          }
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.5 });
 
-    renderVideos(currentList);
+    allPreviewVideos.forEach(video => observer.observe(video));
+  }
+
+  const modal = document.getElementById("modal");
+  const modalIframe = document.getElementById("modal-iframe");
+  modal.querySelector(".modal-close").onclick = closeModal;
+  modal.onclick = e => { if (e.target === modal) closeModal(); };
+
+  function openModal(videoUrl) {
+    pauseAllPreviews();
+    modal.classList.add("active");
+    modalIframe.src = videoUrl + "?autoplay=1";
+  }
+
+  function closeModal() {
+    modal.classList.remove("active");
+    modalIframe.src = "";
+    playAllPreviews();
+  }
+
+  function pauseAllPreviews() {
+    allPreviewVideos.forEach(v => v.pause());
+  }
+
+  function playAllPreviews() {
+    allPreviewVideos.forEach(v => {
+      if (v.src) v.play().catch(() => {});
+    });
+  }
+
+  loadCategory("short");
+</script>
+
   </script>
-
 </body>
 </html>
