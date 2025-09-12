@@ -2,119 +2,80 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #111;
-  color: #fff;
-  text-align: center;
+  color: white;
 }
 
-header {
+.navbar {
+  background: #1a1a1a;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background: linear-gradient(90deg, #a80000, #ff4500);
-  padding: 10px 20px;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 2px solid #ff4747;
 }
 
 .logo {
-  background: #ffcc00;
-  color: #111;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.title h1 {
-  margin: 0;
   font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff4747;
 }
 
-.toggle button {
-  padding: 5px 10px;
+.menu button {
+  background: none;
   border: none;
-  background: #333;
   color: white;
-  border-radius: 5px;
+  margin-left: 10px;
+  font-size: 1rem;
   cursor: pointer;
-  margin-left: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
 }
 
-.toggle .active {
-  background: #ff0000;
+.menu button.active {
+  background: #ff4747;
 }
 
-#searchInput {
-  width: 90%;
-  max-width: 400px;
-  margin: 15px auto;
-  display: block;
-  padding: 8px;
-  border: none;
-  border-radius: 5px;
-  background: #222;
-  color: white;
+.section {
+  padding: 15px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  padding: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
 }
 
-.video-card {
-  background: #222;
-  border-radius: 8px;
-  overflow: hidden;
+.card {
   position: relative;
+  background: #222;
+  border-radius: 10px;
+  overflow: hidden;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.video-card:hover {
+.card:hover {
   transform: scale(1.05);
 }
 
-.video-card video {
+.card video {
   width: 100%;
   display: block;
+  border-radius: 10px;
 }
 
-.video-title {
-  padding: 5px;
-  font-size: 0.9rem;
-  text-align: left;
-}
-
-.play-icon {
+.play-button {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 40px;
   color: white;
-  opacity: 0.8;
-  pointer-events: none;
+  background: rgba(0,0,0,0.6);
+  border-radius: 50%;
+  padding: 10px;
 }
-
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal video {
-  width: 80%;
-  max-width: 700px;
-}
-
-#closeModal {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 40px;
-  color: white;
-  cursor: pointer;
+.card-title {
+  padding: 5px;
+  font-size: 0.85rem;
 }
