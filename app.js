@@ -1,64 +1,70 @@
-const slider = document.querySelector('.grid-slider');
-const modal = document.getElementById("modal");
-const modalVideo = document.getElementById("modal-video");
-const modalClose = document.querySelector(".modal-close");
+let currentCategory = "short";
+let allVideos = [];
 
-function pauseAllPreviews() {
-  document.querySelectorAll('.card video').forEach(v => v.pause());
+function switchCategory(category) {
+  currentCategory = category;
+  document.querySelectorAll(".btn").forEach(btn => btn.classList.remove("active"));
+  document.querySelector(`.btn:nth-child(${category === "short" ? 1 : category === "long" ? 2 : 3})`).classList.add("active");
+  loadVideos();
 }
 
-function playAllPreviews() {
-  document.querySelectorAll('.card video').forEach(v => v.play().catch(()=>{}));
+function loadVideos() {
+  if (currentCategory === "short") {
+    allVideos = videos_short;
+  } else if (currentCategory === "long") {
+    allVideos = videos_long;
+  } else {
+    allVideos = videos_populer;
+  }
+  renderVideos(allVideos);
 }
 
-function openModal(videoUrl) {
-  pauseAllPreviews();
-  modal.classList.add("active");
-  modalVideo.src = videoUrl;
-  modalVideo.play().catch(()=>{});
+function renderVideos(videoList) {
+  const grid = document.getElementById("video-grid");
+  grid.innerHTML = "";
+
+  videoList.forEach(video => {
+    const card = document.createElement("div");
+    card.className = "video-card";
+
+    card.innerHTML = `
+      <video muted preload="metadata">
+        <source src="${video.url}#t=0,1" type="video/mp4">
+      </video>
+      <div class="video-title">${video.title}</div>
+    `;
+
+    // Preview Play on Hover
+    const vidEl = card.querySelector("video");
+    card.addEventListener("mouseenter", () => vidEl.play());
+    card.addEventListener("mouseleave", () => { vidEl.pause(); vidEl.currentTime = 0; });
+
+    // Play Modal on Click
+    card.addEventListener("click", () => openModal(video.url));
+
+    grid.appendChild(card);
+  });
+}
+
+function filterVideos() {
+  const query = document.getElementById("search").value.toLowerCase();
+  const filtered = allVideos.filter(v => v.title.toLowerCase().includes(query));
+  renderVideos(filtered);
+}
+
+function openModal(url) {
+  const modal = document.getElementById("videoModal");
+  const modalVideo = document.getElementById("modalVideo");
+  modalVideo.src = url;
+  modal.style.display = "flex";
 }
 
 function closeModal() {
-  modal.classList.remove("active");
+  const modal = document.getElementById("videoModal");
+  const modalVideo = document.getElementById("modalVideo");
   modalVideo.pause();
-  modalVideo.src = "";
-  playAllPreviews();
+  modal.style.display = "none";
 }
 
-modalClose.addEventListener("click", closeModal);
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
-
-function createCard(movie) {
-  const card = document.createElement('div');
-  card.className = 'card';
-
-  const vid = document.createElement('video');
-  vid.src = movie.video + "#t=0,1";
-  vid.muted = true;
-  vid.playsInline = true;
-  vid.autoplay = true;
-  vid.loop = true;
-  vid.loading = "lazy";
-  card.appendChild(vid);
-
-  const playBtn = document.createElement('div');
-  playBtn.className = 'play-btn';
-  playBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>`;
-  card.appendChild(playBtn);
-
-  const title = document.createElement('div');
-  title.className = 'card-title';
-  title.textContent = movie.title;
-  card.appendChild(title);
-
-  card.addEventListener('click', () => openModal(movie.video));
-
-  return card;
-}
-
-function renderMovies(movies) {
-  slider.innerHTML = "";
-  movies.forEach(m => slider.appendChild(createCard(m)));
-}
+// Load default category
+window.onload = () => loadVideos();
