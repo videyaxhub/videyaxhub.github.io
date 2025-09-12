@@ -7,23 +7,41 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- AGE VERIFICATION -->
+  <div id="ageGate" class="age-gate">
+    <div class="age-box">
+      <h2>Are you 18+ ?</h2>
+      <p>This site may contain adult content. Please confirm you are over 18 to continue.</p>
+      <button onclick="enterSite()">Yes, I’m 18+</button>
+      <button onclick="window.location.href='https://google.com'">No, Take Me Back</button>
+    </div>
+  </div>
+
+  <!-- HEADER -->
   <header>
-    <div class="logo">VideoHub</div>
-    <div class="tagline">Short & Long clips — streaming from CDN</div>
-    <div class="tab-buttons">
-      <button id="btnShort" class="active">Short</button>
-      <button id="btnLong">Long</button>
+    <div class="logo">
+      <span class="logo-box">VH</span>
+      <h1>VideoHub</h1>
+      <p>Short & Long clips — streaming from CDN</p>
+    </div>
+    <div class="toggle">
+      <button id="shortBtn" class="active">Short</button>
+      <button id="longBtn">Long</button>
     </div>
   </header>
 
-  <main>
-    <input type="text" id="search" placeholder="Search videos...">
-    <div id="videoGrid" class="grid"></div>
-  </main>
+  <!-- SEARCH -->
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search videos...">
+  </div>
 
+  <!-- GRID -->
+  <div id="videoGrid" class="grid"></div>
+
+  <!-- FOOTER -->
   <footer>
     <p><strong>Disclaimer:</strong> All videos are for entertainment only. This site does not host or store any media files; it links to external sources.</p>
-    <p><strong>Privacy:</strong> No personal data is collected. Basic localStorage may be used for UX only.</p>
+    <p><strong>Privacy:</strong> No personal data is collected. Basic localStorage may be used for UX only (age gate).</p>
     <p>© 2025 VideoHub</p>
   </footer>
 
@@ -32,3 +50,17 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
+ <!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,4573229,4,0,0,0,00010000']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js');
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4573229&101" alt="" border="0"></a></noscript>
+<!-- Histats.com  END  -->
