@@ -1,31 +1,23 @@
 const container = document.getElementById('video-container');
-const searchInput = document.getElementById('search');
 const modal = document.getElementById('video-modal');
 const modalVideo = document.getElementById('modal-video');
 const closeModal = document.getElementById('close-modal');
 
-let currentCategory = 'short';
-let currentVideos = [];
-
 function renderVideos(category) {
-  currentCategory = category;
   container.innerHTML = '';
-  if (category === 'short') currentVideos = videos_short;
-  if (category === 'long') currentVideos = videosLong;
-  if (category === 'popular') currentVideos = videosPopular;
-  displayVideos(currentVideos);
-}
+  let data = [];
+  if (category === 'short') data = videos_short;
+  if (category === 'long') data = videosLong;
+  if (category === 'popular') data = videosPopular;
 
-function displayVideos(list) {
-  container.innerHTML = '';
-  list.forEach(video => {
+  data.forEach(video => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <video preload="metadata" muted playsinline loop poster="${video.poster || ''}">
+      <video preload="metadata" muted playsinline loop loading="lazy">
         <source src="${video.url}" type="video/mp4">
       </video>
-      <p>${video.title}</p>
+      <p style="padding: 5px;">${video.title}</p>
     `;
     card.addEventListener('click', () => openModal(video.url));
     container.appendChild(card);
@@ -52,11 +44,22 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 });
 
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase();
-  const filtered = currentVideos.filter(v => v.title.toLowerCase().includes(keyword));
-  displayVideos(filtered);
-});
-
-// Load default
+// Load default category
 renderVideos('short');
+
+function displayVideos(list) {
+  container.innerHTML = '';
+  list.forEach(video => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <video preload="metadata" muted playsinline loop poster="${video.poster || ''}">
+        <source src="${video.url}" type="video/mp4">
+      </video>
+      <div class="play-btn"></div>
+      <p>${video.title}</p>
+    `;
+    card.addEventListener('click', () => openModal(video.url));
+    container.appendChild(card);
+  });
+}
