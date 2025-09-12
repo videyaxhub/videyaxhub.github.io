@@ -1,4 +1,4 @@
-const videosShort = [
+const videos_short = [
   { title: "He looks like an inner peace that contradicts reality 😭", url: "https://cdn.videy.co/pJUHLkt51.mp4" },
   { title: "Nutted a simple caption 😉", url: "https://cdn.videy.co/EGFcCPEp1.mp4" },
   { title: "Oh She's Having Her Way", url: "https://cdn.videy.co/7uJnxSnX1.mp4" },
@@ -30,5 +30,15 @@ const videosShort = [
   { title: "Ice Cream machine was down", url: "https://cdn.videy.co/kRymrbEy1.mp4" },
   { title: "That’s a lot, can y’all guess what it is?", url: "https://cdn.videy.co/vIJtUbZb1.mp4" },
   { title: "She said ‘trust me’… now I’m halfway to Narnia 💀🪜", url: "https://cdn.videy.co/8Mv9s5fz1.mp4" },
-  { title: "Y’all know scrubs don’t always mean healthcare", url: "https://cdn.videy.co/hZVXkhEN1.mp4" }
+  { title: "Y’all know scrubs don’t always mean healthcare", url: "https://cdn.videy.co/hZVXkhEN1.mp4" },
+  { title: "this magic trick works", url: "https://cdn.videy.co/jI9Npkgl1.mp4" },
+  { title: "Walmart Employee on Break😮‍💨", url: "https://cdn.videy.co/H2JOevbT1.mp4" },
+  { title: "back blown, mark show😮‍💨", url: "https://cdn.videy.co/c49m0jv41.mp4" },
+  { title: "enough to make you weak!", url: "https://cdn.videy.co/lTQwNMZ01.mp4" },
+  { title: "Whole vibe got ruined when moms kicked in 😩💀", url: "https://cdn.videy.co/MnKgKKyj1.mp4" },
+  { title: "Phone buzzin’ like it owe me somethin’", url: "https://cdn.videy.co/9GpM672v1.mp4" },
+  { title: "Whole aisle turned into a runway—she walked like she meant it", url: "https://cdn.videy.co/PCpGA1Vi1.mp4" },
+  { title: "This the kinda pretty that make traffic stop", url: "https://cdn.videy.co/edhWodl51.mp4" },
+  { title: "this one’s got me like ‘wait, WHAT?", url: "https://cdn.videy.co/pjwmPwyC1.mp4" },
+  { title: "I'm thirsty and hungry😋😌", url: "https://cdn.videy.co/P4XsMvTt1.mp4" }
 ];
