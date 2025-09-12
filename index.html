@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VideoHub</title>
+  <title>VideyXHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,28 +15,23 @@
         <p>Short & Long clips — streaming from CDN</p>
       </div>
     </div>
-    <div class="controls">
-      <button id="btnShort" class="active">Short</button>
-      <button id="btnLong">Long</button>
-    </div>
   </header>
 
-  <main>
-    <input type="text" id="searchInput" placeholder="Search videos...">
-    <div id="videoContainer" class="grid"></div>
-  </main>
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search videos...">
+  </div>
+
+  <main id="video-container" class="grid"></main>
 
   <footer>
-    <p><b>Disclaimer:</b> All videos are for entertainment only. This site does not host or store media files; it links to external sources.</p>
-    <p><b>Privacy:</b> No personal data is collected. LocalStorage may be used for UX only.</p>
-    <p>© 2025 VideoHub</p>
+    <p>Disclaimer: All videos are for entertainment only. This site does not host any media files.</p>
   </footer>
 
   <!-- Modal -->
-  <div id="videoModal" class="modal">
+  <div id="video-modal" class="modal">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <video id="modalVideo" controls autoplay></video>
+      <span id="close-modal">&times;</span>
+      <video id="modal-video" controls autoplay></video>
     </div>
   </div>
 
