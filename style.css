@@ -5,16 +5,51 @@ body {
   color: white;
 }
 
-/* ====== HEADER ====== */
+/* ====== HEADER FLEX ====== */
 header {
   background: linear-gradient(to right, #b80000, #ff5a00);
-  text-align: center;
-  padding: 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
 }
 
-.logo {
+/* NAV BUTTONS (KIRI) */
+.nav-buttons {
   display: flex;
-  justify-content: center;
+  gap: 6px;
+}
+
+.nav-buttons button {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-buttons button:hover {
+  background: #ff3333;
+  transform: translateY(-1px);
+}
+
+.nav-buttons button.active {
+  background: #ff0000;
+}
+
+/* LOGO AREA (KANAN) */
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.logo-row {
+  display: flex;
   align-items: center;
 }
 
@@ -35,32 +70,10 @@ header {
 .logo-subtext {
   font-size: 13px;
   color: #ddd;
-  margin: 6px 0;
+  margin-top: 3px;
 }
 
-/* ====== BUTTON SHORT/LONG ====== */
-.nav-buttons button {
-  background: #333;
-  color: white;
-  border: none;
-  padding: 6px 14px;
-  margin: 0 3px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.2s ease-in-out;
-}
-
-.nav-buttons button:hover {
-  background: #ff3333;
-  transform: translateY(-1px);
-}
-
-.nav-buttons button.active {
-  background: #ff0000;
-}
-
-/* ====== SEARCH BAR ====== */
+/* SEARCH BAR */
 .search-container {
   display: flex;
   justify-content: center;
@@ -83,7 +96,7 @@ header {
   box-shadow: 0 0 6px #ff0000;
 }
 
-/* ====== VIDEO GRID ====== */
+/* VIDEO GRID */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
@@ -110,7 +123,6 @@ header {
   display: block;
 }
 
-/* ====== PLAY BUTTON ====== */
 .play-btn {
   position: absolute;
   top: 50%;
@@ -128,7 +140,7 @@ header {
   opacity: 1;
 }
 
-/* ====== MODAL VIDEO ====== */
+/* MODAL */
 .modal {
   display: none;
   position: fixed;
@@ -157,7 +169,7 @@ header {
   color: white;
 }
 
-/* ====== FOOTER ====== */
+/* FOOTER */
 footer {
   font-size: 12px;
   color: #aaa;
