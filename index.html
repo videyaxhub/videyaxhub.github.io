@@ -3,34 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Gallery</title>
+  <title>VideoHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="logo">VIDEYX</div>
-    <div class="menu">
-      <button id="btnShort" class="active">Short</button>
-      <button id="btnLong">Long</button>
+
+  <header>
+    <div class="logo-area">
+      <div class="logo-row">
+        <div class="logo-circle">VH</div>
+        <div class="logo-text">VideoHub</div>
+      </div>
+      <div class="logo-subtext">Short & Long clips — streaming from CDN</div>
     </div>
-  </nav>
 
-  <!-- Section Populer -->
-  <section class="section">
-    <h2>🔥 Populer</h2>
-    <div id="popularGrid" class="grid"></div>
-  </section>
+    <div class="nav-buttons">
+      <button class="btn-short active" onclick="loadVideos('short')">Short</button>
+      <button class="btn-long" onclick="loadVideos('long')">Long</button>
+      <button class="btn-populer" onclick="loadVideos('populer')">Populer</button>
+    </div>
+  </header>
 
-  <!-- Section Video -->
-  <section class="section">
-    <h2 id="videoSectionTitle">🎬 Video</h2>
-    <div id="videoGrid" class="grid"></div>
-  </section>
+  <!-- REVIEW VIDEO -->
+  <div class="review-video-container">
+    <video id="reviewVideo" autoplay muted loop playsinline>
+      <source src="https://cdn.videy.co/edhWodl51.mp4" type="video/mp4">
+    </video>
+    <div class="review-play-btn" onclick="toggleReviewPlay()">▶</div>
+  </div>
 
-  <script src="videos_popular.js"></script>
-  <script src="videos_short.js"></script>
-  <script src="videos_long.js"></script>
+  <div class="search-container">
+    <input type="text" placeholder="Search videos..." id="searchInput">
+  </div>
+
+  <div class="video-grid" id="videoGrid"></div>
+
+  <footer>
+    <p>Disclaimer: All videos are for entertainment only.</p>
+    <p>© 2025 VideoHub</p>
+  </footer>
+
+  <!-- DATA TERPISAH -->
+  <script src="videosShort.js"></script>
+  <script src="videosLong.js"></script>
+  <script src="videosPopular.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
