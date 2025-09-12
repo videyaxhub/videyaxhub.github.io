@@ -60,20 +60,3 @@ searchInput.addEventListener('input', () => {
 
 // Load default
 renderVideos('short');
-
-function displayVideos(list) {
-  container.innerHTML = '';
-  list.forEach(video => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
-      <video preload="metadata" muted playsinline loop poster="${video.poster || ''}">
-        <source src="${video.url}" type="video/mp4">
-      </video>
-      <div class="play-btn"></div>
-      <p>${video.title}</p>
-    `;
-    card.addEventListener('click', () => openModal(video.url));
-    container.appendChild(card);
-  });
-}
