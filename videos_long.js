@@ -1,4 +1,4 @@
-[
+const videosLong = [
   {
     "title": "Auntie sleepin like she the dream I been tryna catch",
     "src": "https://cdn.videy.co/eXR3LYr91.mp4"
@@ -159,4 +159,4 @@
     "title": "When the vibes hit record mode",
     "src": "https://cdn.videy.co/02NElcy71.mp4"
   }
-]
+];
