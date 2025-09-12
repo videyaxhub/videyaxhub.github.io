@@ -3,64 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VideoHub</title>
+  <title>My Video Gallery</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- AGE VERIFICATION -->
-  <div id="ageGate" class="age-gate">
+
+  <!-- AGE GATE -->
+  <div id="age-gate">
     <div class="age-box">
-      <h2>Are you 18+ ?</h2>
-      <p>This site may contain adult content. Please confirm you are over 18 to continue.</p>
-      <button onclick="enterSite()">Yes, I’m 18+</button>
-      <button onclick="window.location.href='https://google.com'">No, Take Me Back</button>
+      <h1>🔞 Are You 18+?</h1>
+      <p>You must be 18 years old or older to enter this site.</p>
+      <button onclick="enterSite()">Yes, I am 18+</button>
+      <button onclick="window.location.href='https://google.com'">No, take me back</button>
     </div>
   </div>
 
   <!-- HEADER -->
   <header>
-    <div class="logo">
-      <span class="logo-box">VH</span>
-      <h1>VideoHub</h1>
-      <p>Short & Long clips — streaming from CDN</p>
-    </div>
-    <div class="toggle">
-      <button id="shortBtn" class="active">Short</button>
-      <button id="longBtn">Long</button>
-    </div>
+    <div class="logo">🔥 MyVideoHub</div>
+    <nav>
+      <button onclick="showVideos('short')">Short</button>
+      <button onclick="showVideos('long')">Long</button>
+      <button onclick="showVideos('popular')">Popular</button>
+    </nav>
+    <input type="text" id="searchInput" placeholder="Search videos..." oninput="filterVideos()">
   </header>
 
-  <!-- SEARCH -->
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search videos...">
-  </div>
-
-  <!-- GRID -->
-  <div id="videoGrid" class="grid"></div>
+  <!-- VIDEO GRID -->
+  <main id="video-grid"></main>
 
   <!-- FOOTER -->
   <footer>
-    <p><strong>Disclaimer:</strong> All videos are for entertainment only. This site does not host or store any media files; it links to external sources.</p>
-    <p><strong>Privacy:</strong> No personal data is collected. Basic localStorage may be used for UX only (age gate).</p>
-    <p>© 2025 VideoHub</p>
+    <p>⚠️ Disclaimer: All content is for entertainment purposes only.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
   </footer>
 
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
+  <script src="videos_popular.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
-
-
- <!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4573229,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4573229&101" alt="" border="0"></a></noscript>
-<!-- Histats.com  END  -->
