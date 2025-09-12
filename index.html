@@ -8,6 +8,7 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
     <div class="logo-area">
       <div class="logo-row">
@@ -20,22 +21,22 @@
     <div class="nav-buttons">
       <button class="btn-short active" onclick="loadVideos('short')">Short</button>
       <button class="btn-long" onclick="loadVideos('long')">Long</button>
-      <button class="btn-populer" onclick="loadVideos('populer')">Populer</button>
+      <button class="btn-popular" onclick="loadVideos('popular')">Popular</button>
     </div>
   </header>
 
   <!-- REVIEW VIDEO -->
   <div class="review-video-container">
-    <video id="reviewVideo" autoplay muted loop playsinline>
-      <source src="https://cdn.videy.co/edhWodl51.mp4" type="video/mp4">
-    </video>
+    <video id="reviewVideo" autoplay muted playsinline></video>
     <div class="review-play-btn" onclick="toggleReviewPlay()">▶</div>
   </div>
 
+  <!-- SEARCH -->
   <div class="search-container">
     <input type="text" placeholder="Search videos..." id="searchInput">
   </div>
 
+  <!-- GRID -->
   <div class="video-grid" id="videoGrid"></div>
 
   <footer>
@@ -44,9 +45,9 @@
   </footer>
 
   <!-- DATA TERPISAH -->
-  <script src="videosShort.js"></script>
-  <script src="videosLong.js"></script>
-  <script src="videosPopular.js"></script>
+  <script src="videos_short.js"></script>
+  <script src="videos_long.js"></script>
+  <script src="videos_popular.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
