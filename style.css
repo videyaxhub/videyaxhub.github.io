@@ -103,6 +103,12 @@ header {
   display: block;
   border-bottom: 1px solid #333;
 }
+
+video {
+  background: #111 url("fallback.jpg") center center / cover no-repeat;
+  border-radius: 10px;
+}
+
 .play-btn {
   position: absolute;
   top: 50%;
