@@ -8,47 +8,38 @@
 </head>
 <body>
 
-  <header>
-    <div class="logo-area">
-      <div class="logo-row">
-        <div class="logo-circle">VH</div>
-        <div class="logo-text">VideoHub</div>
-      </div>
-      <div class="logo-subtext">Short & Long clips — streaming from CDN</div>
-    </div>
+<header>
+  <div class="nav-left">
+    <h1>VH</h1>
+    <p>VideoHub<br>Short & Long clips — streaming from CDN</p>
+  </div>
+  <div class="nav-right">
+    <button class="active">Short</button>
+    <button>Long</button>
+    <button>Popular</button>
+  </div>
+</header>
 
-    <div class="nav-buttons">
-      <button class="btn-short active" onclick="loadVideos('short')">Short</button>
-      <button class="btn-long" onclick="loadVideos('long')">Long</button>
-      <button class="btn-popular" onclick="loadVideos('popular')">Popular</button>
-    </div>
-  </header>
+<main>
+  <!-- PREVIEW VIDEO -->
+  <video id="preview" muted autoplay playsinline>
+    <source src="https://cdn.example.com/video.mp4" type="video/mp4">
+  </video>
 
-  <!-- REVIEW VIDEO -->
-  <div class="review-video-container">
-    <video id="reviewVideo" autoplay muted playsinline>
-      <source src="https://cdn.videy.co/edhWodl51.mp4" type="video/mp4">
+  <!-- PLAY BUTTON -->
+  <button id="playBtn" class="play-button">▶ Play</button>
+</main>
+
+<!-- MODAL -->
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close-btn">&times;</span>
+    <video id="fullVideo" controls autoplay>
+      <source src="https://cdn.example.com/video.mp4" type="video/mp4">
     </video>
-    <div class="review-play-btn" onclick="toggleReviewPlay()">▶</div>
   </div>
+</div>
 
-  <!-- SEARCH -->
-  <div class="search-container">
-    <input type="text" placeholder="Search videos..." id="searchInput">
-  </div>
-
-  <!-- VIDEO GRID -->
-  <div class="video-grid" id="videoGrid"></div>
-
-  <footer>
-    <p>Disclaimer: All videos are for entertainment only.</p>
-    <p>© 2025 VideoHub</p>
-  </footer>
-
-  <!-- JS FILES -->
-  <script src="videos_short.js"></script>
-  <script src="videos_long.js"></script>
-  <script src="videos_popular.js"></script>
-  <script src="app.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
