@@ -1,94 +1,165 @@
 body {
   margin: 0;
-  background: #000;
-  color: #fff;
   font-family: Arial, sans-serif;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background: linear-gradient(to right, red, orange, black);
-}
-
-.logo {
-  font-size: 1.4rem;
-  font-weight: bold;
-}
-
-.controls button {
-  background: #222;
+  background: #0d0d0d;
   color: white;
-  border: none;
-  margin-left: 8px;
-  padding: 5px 10px;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
-.controls button.active {
-  background: red;
-}
-
-#video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
-  padding: 20px;
-}
-
-.video-card {
-  background: #111;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-  transition: transform 0.2s ease;
-}
-
-.video-card:hover {
-  transform: scale(1.05);
-}
-
-.video-card video {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-.video-title {
-  padding: 6px;
-  font-size: 0.9rem;
-  text-align: center;
-}
-
-#video-modal {
-  display: none;
+/* Age Gate */
+#age-gate {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 99;
 }
-
-.modal-content {
-  background: #000;
-  padding: 10px;
-  border-radius: 10px;
+.age-box {
+  background: #1a1a1a;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
 }
-
-#modal-video {
-  width: 80vw;
-  max-height: 80vh;
-}
-
-.close-btn {
-  position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 2rem;
+.age-box button {
+  margin: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
   cursor: pointer;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.age-box button:first-child {
+  background: linear-gradient(90deg, red, orange);
+  color: white;
+}
+.age-box button:last-child {
+  background: #444;
+  color: #fff;
+}
+
+/* Header */
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #1a1a1a;
+  padding: 1rem;
+}
+.logo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: orange;
+  text-shadow: 0 0 10px red;
+  margin-bottom: 0.5rem;
+}
+.controls button {
+  margin: 0.3rem;
+  background: #222;
+  color: white;
+  border: 1px solid orange;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.controls button.active {
+  background: linear-gradient(90deg, red, orange);
+  color: white;
+}
+
+/* Search bar */
+#search-input {
+  width: 80%;
+  max-width: 500px;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid orange;
+  border-radius: 8px;
+  background: #0d0d0d;
+  color: white;
+}
+
+/* Video Grid */
+#video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.video-card {
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+  position: relative;
+}
+.video-preview {
+  position: relative;
+  background: #000;
+}
+.video-preview video {
+  width: 100%;
+  display: block;
+  border-bottom: 1px solid #333;
+}
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  padding: 5px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: orange;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.video-title {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* Modal */
+#video-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+#video-modal video {
+  max-width: 90%;
+  max-height: 90%;
+  background: black;
+  border-radius: 8px;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #1a1a1a;
+  font-size: 0.8rem;
+}
+footer a {
+  color: orange;
+  text-decoration: none;
 }
