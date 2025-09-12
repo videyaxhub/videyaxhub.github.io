@@ -3,45 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VideoHub</title>
+  <title>VideyXHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="logo-container">
-      <div class="logo-circle">VH</div>
-      <div class="logo-text">
-        <h1>VideoHub</h1>
-        <span>Short & Long clips — streaming from CDN</span>
-      </div>
-    </div>
-    <nav class="nav-buttons">
-      <button class="tab-btn active" data-category="short">Short</button>
-      <button class="tab-btn" data-category="long">Long</button>
-      <button class="tab-btn" data-category="popular">Popular</button>
-    </nav>
-  </header>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">🎥 VideyXHub</div>
+    <ul class="nav-links">
+      <li onclick="renderVideos('popular')" class="active">Popular</li>
+      <li onclick="renderVideos('short')">Short</li>
+      <li onclick="renderVideos('long')">Long</li>
+    </ul>
+  </nav>
 
-  <main>
-    <div class="search-container">
-      <input type="text" id="search" placeholder="Search videos...">
-    </div>
-    <div id="video-container" class="video-grid"></div>
-    <p class="disclaimer">
-      Disclaimer: All videos are for entertainment only. This site does not host or store any media files; it links to external sources.<br>
-      Privacy: No personal data is collected. Basic localStorage may be used for UX only (age gate).
-    </p>
-  </main>
+  <!-- Video Grid -->
+  <div id="videoGrid" class="video-grid"></div>
 
   <!-- Modal -->
-  <div id="video-modal" class="modal">
-    <div class="modal-content">
-      <span id="close-modal">&times;</span>
-      <video id="modal-video" controls autoplay></video>
-    </div>
+  <div id="videoModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <video id="modalVideo" controls autoplay></video>
   </div>
 
-  <!-- JS -->
+  <!-- Scripts -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
