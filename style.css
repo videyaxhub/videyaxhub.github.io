@@ -1,100 +1,70 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #000;
+  background: #0f0f0f;
   color: #fff;
 }
 
-/* HEADER */
 header {
-  background: linear-gradient(to right, #e50914, #ff6600);
-  padding: 15px;
+  background: linear-gradient(90deg, #ff3b3b, #ff884d);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  text-align: center;
+  padding: 12px 20px;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-circle {
-  background: #ffcc00;
-  color: #b30000;
+  font-size: 1.4em;
   font-weight: bold;
-  font-size: 1rem;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
-.logo-text h1 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.logo-text p {
-  margin: 0;
-  font-size: 0.85rem;
-  opacity: 0.9;
-}
-
-.controls {
-  margin-top: 10px;
-}
-
-.controls button {
-  background: #333;
-  color: white;
+.tabs button {
+  background: rgba(255,255,255,0.15);
   border: none;
-  padding: 8px 16px;
-  margin: 0 3px;
-  border-radius: 6px;
+  color: white;
+  margin-left: 5px;
+  padding: 8px 14px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
-.controls .active {
-  background: #e50914;
+.tabs button.active {
+  background: white;
+  color: #ff3b3b;
+  font-weight: bold;
 }
 
-/* SEARCH */
-main {
-  text-align: center;
-  margin: 10px;
+.search-container {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
 }
 
-#searchInput {
+.search-container input {
   width: 90%;
-  max-width: 400px;
+  max-width: 500px;
   padding: 10px;
-  border-radius: 6px;
-  border: none;
-  background: #1c1c1c;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1a1a1a;
   color: white;
 }
 
-/* VIDEO GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 10px;
-  margin-top: 15px;
+  padding: 10px;
 }
 
 .card {
-  position: relative;
   background: #1c1c1c;
   border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  position: relative; /* penting untuk play button positioning */
 }
 
 .card video {
@@ -104,18 +74,13 @@ main {
   background: #000;
 }
 
-.card p {
-  padding: 5px 8px;
-  font-size: 0.85rem;
-}
-
-/* PLAY BUTTON */
+/* Tombol play di tengah */
 .play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0,0,0,0.6);
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -132,15 +97,15 @@ main {
   margin-left: 3px;
 }
 
-/* MODAL */
+
+/* Modal */
 .modal {
   display: none;
   position: fixed;
-  z-index: 999;
-  left: 0; top: 0;
-  width: 100%; height: 100%;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0,0,0,0.9);
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -148,22 +113,21 @@ main {
 .modal-content {
   max-width: 90%;
   max-height: 80%;
-  text-align: center;
+  position: relative;
 }
 
-.close {
+#close-modal {
   position: absolute;
-  top: 20px;
-  right: 30px;
-  font-size: 30px;
-  color: white;
+  top: -40px;
+  right: 0;
+  font-size: 2em;
   cursor: pointer;
+  color: white;
 }
 
-/* FOOTER */
 footer {
   text-align: center;
-  font-size: 0.8rem;
-  padding: 15px;
-  opacity: 0.6;
+  font-size: 0.8em;
+  padding: 10px;
+  color: #aaa;
 }
