@@ -1,77 +1,79 @@
-const grid = document.getElementById('video-grid');
-const modal = document.getElementById('video-modal');
-const modalVideo = document.getElementById('modal-video');
-const closeBtn = document.querySelector('.close-btn');
-const searchInput = document.getElementById('search-input');
+function enterSite() {
+  document.getElementById("age-gate").style.display = "none";
+}
 
-let currentCategory = 'short';
+let currentCategory = "short";
+const videoGrid = document.getElementById("video-grid");
+const modal = document.getElementById("video-modal");
+const modalVideo = document.getElementById("modal-video");
 
-function renderVideos(videos) {
-  grid.innerHTML = '';
-  videos.forEach(video => {
-    const card = document.createElement('div');
-    card.classList.add('video-card');
+function showCategory(category) {
+  currentCategory = category;
+  document.querySelectorAll(".controls button").forEach(btn => btn.classList.remove("active"));
+  document.querySelector(`.controls button[onclick="showCategory('${category}')"]`).classList.add("active");
+  renderVideos();
+}
+
+function renderVideos() {
+  videoGrid.innerHTML = "";
+  let data = currentCategory === "short" ? videosShort : currentCategory === "long" ? videosLong : videosPopular;
+
+  data.forEach(video => {
+    const card = document.createElement("div");
+    card.className = "video-card";
+
     card.innerHTML = `
-      <video muted preload="metadata" src="${video.url}"></video>
+      <div class="video-preview">
+        <div class="loading-spinner"></div>
+        <video src="${video.url}" muted preload="metadata"></video>
+        <div class="play-btn">▶</div>
+      </div>
       <div class="video-title">${video.title}</div>
     `;
-    card.addEventListener('mouseenter', () => {
-      const vid = card.querySelector('video');
-      vid.currentTime = 0;
-      vid.play();
-      setTimeout(() => vid.pause(), 1000);
+
+    const videoEl = card.querySelector("video");
+    const spinner = card.querySelector(".loading-spinner");
+
+    videoEl.addEventListener("loadedmetadata", () => {
+      videoEl.currentTime = videoEl.duration > 1 ? 1 : 0;
     });
-    card.addEventListener('click', () => {
-      modal.style.display = 'flex';
-      modalVideo.src = video.url;
-      modalVideo.play();
-    });
-    grid.appendChild(card);
+
+    videoEl.addEventListener("seeked", () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = videoEl.videoWidth;
+      canvas.height = videoEl.videoHeight;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(videoEl, 0, 0, canvas.width, canvas.height);
+      const thumbnail = canvas.toDataURL("image/jpeg");
+      videoEl.setAttribute("poster", thumbnail);
+      spinner.style.display = "none";
+      videoEl.pause();
+      videoEl.src = ""; // hentikan load video
+    }, { once: true });
+
+    card.querySelector(".play-btn").addEventListener("click", () => openModal(video.url));
+    videoGrid.appendChild(card);
   });
 }
 
-function loadCategory(category) {
-  currentCategory = category;
-  if (category === 'short') renderVideos(videosShort);
-  if (category === 'long') renderVideos(videosLong);
-  if (category === 'popular') renderVideos(videosPopular);
+function openModal(url) {
+  modal.style.display = "flex";
+  modalVideo.src = url;
+  modalVideo.play();
 }
 
-document.querySelectorAll('.toggle-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    loadCategory(btn.dataset.category);
-  });
-});
-
-closeBtn.addEventListener('click', () => {
-  modal.style.display = 'none';
+function closeModal() {
+  modal.style.display = "none";
   modalVideo.pause();
-});
+  modalVideo.src = "";
+}
 
-window.addEventListener('click', e => {
-  if (e.target === modal) {
-    modal.style.display = 'none';
-    modalVideo.pause();
-  }
-});
+function searchVideos() {
+  const query = document.getElementById("search-input").value.toLowerCase();
+  document.querySelectorAll(".video-card").forEach(card => {
+    const title = card.querySelector(".video-title").textContent.toLowerCase();
+    card.style.display = title.includes(query) ? "block" : "none";
+  });
+}
 
-searchInput.addEventListener('input', e => {
-  const query = e.target.value.toLowerCase();
-  const videos = currentCategory === 'short' ? videosShort :
-                 currentCategory === 'long' ? videosLong : videosPopular;
-  const filtered = videos.filter(v => v.title.toLowerCase().includes(query));
-  renderVideos(filtered);
-});
-
-// Age Gate
-document.getElementById('yes-btn').addEventListener('click', () => {
-  document.getElementById('age-gate').style.display = 'none';
-  document.getElementById('main-content').style.display = 'block';
-  loadCategory('short');
-});
-
-document.getElementById('no-btn').addEventListener('click', () => {
-  window.location.href = "https://google.com";
-});
+renderVideos();
