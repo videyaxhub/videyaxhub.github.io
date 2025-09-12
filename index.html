@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VideoHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">VideoHub</div>
+    <div class="tagline">Short & Long clips — streaming from CDN</div>
+    <div class="tab-buttons">
+      <button id="btnShort" class="active">Short</button>
+      <button id="btnLong">Long</button>
+    </div>
+  </header>
+
+  <main>
+    <input type="text" id="search" placeholder="Search videos...">
+    <div id="videoGrid" class="grid"></div>
+  </main>
+
+  <footer>
+    <p><strong>Disclaimer:</strong> All videos are for entertainment only. This site does not host or store any media files; it links to external sources.</p>
+    <p><strong>Privacy:</strong> No personal data is collected. Basic localStorage may be used for UX only.</p>
+    <p>© 2025 VideoHub</p>
+  </footer>
+
+  <script src="videos_short.js"></script>
+  <script src="videos_long.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
