@@ -3,30 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VideyXHub</title>
+  <title>VideoHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="nav-logo">🎥 VideyXHub</div>
-    <ul class="nav-links">
-      <li onclick="renderVideos('popular')" class="active">Popular</li>
-      <li onclick="renderVideos('short')">Short</li>
-      <li onclick="renderVideos('long')">Long</li>
-    </ul>
-  </nav>
+  <header>
+    <div class="logo">
+      <div class="logo-circle">VH</div>
+      <div class="logo-text">
+        <h1>VideoHub</h1>
+        <p>Short & Long clips — streaming from CDN</p>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="btnShort" class="active">Short</button>
+      <button id="btnLong">Long</button>
+    </div>
+  </header>
 
-  <!-- Video Grid -->
-  <div id="videoGrid" class="video-grid"></div>
+  <main>
+    <input type="text" id="searchInput" placeholder="Search videos...">
+    <div id="videoContainer" class="grid"></div>
+  </main>
+
+  <footer>
+    <p><b>Disclaimer:</b> All videos are for entertainment only. This site does not host or store media files; it links to external sources.</p>
+    <p><b>Privacy:</b> No personal data is collected. LocalStorage may be used for UX only.</p>
+    <p>© 2025 VideoHub</p>
+  </footer>
 
   <!-- Modal -->
   <div id="videoModal" class="modal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <video id="modalVideo" controls autoplay></video>
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <video id="modalVideo" controls autoplay></video>
+    </div>
   </div>
 
-  <!-- Scripts -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
