@@ -1,4 +1,4 @@
-const videosPopular = [
+const videosShort = [
   {
     "title": "He looks like an inner peace that contradicts reality \ud83d\ude2d",
     "src": "https://cdn.videy.co/pJUHLkt51.mp4"
