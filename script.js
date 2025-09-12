@@ -1,69 +1,70 @@
-let currentData = videosShort;
-const grid = document.getElementById("videoGrid");
-const btnShort = document.getElementById("btnShort");
-const btnLong = document.getElementById("btnLong");
-const searchInput = document.getElementById("search");
+let currentVideos = videosShort;
 
-function renderVideos(data) {
-  grid.innerHTML = "";
-  data.forEach(video => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    const thumb = document.createElement("div");
-    thumb.className = "thumbnail";
-
-    const videoEl = document.createElement("video");
-    videoEl.src = video.url;
-    videoEl.muted = true;
-    videoEl.preload = "metadata";
-
-    thumb.appendChild(videoEl);
-
-    const playBtn = document.createElement("button");
-    playBtn.className = "play-btn";
-    playBtn.innerHTML = "▶";
-    playBtn.onclick = () => window.open(video.url, "_blank");
-    thumb.appendChild(playBtn);
-
-    thumb.addEventListener("mouseenter", () => {
-      videoEl.currentTime = 0;
-      videoEl.play().catch(() => {});
-      setTimeout(() => videoEl.pause(), 1000);
+function renderVideos(videos) {
+  const grid = document.getElementById('videoGrid');
+  grid.innerHTML = '';
+  videos.forEach(video => {
+    const card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML = `
+      <video src="${video.url}" muted preload="metadata"></video>
+      <div class="video-title">${video.title}</div>`;
+    card.addEventListener('mouseenter', () => {
+      try {
+        const vid = card.querySelector('video');
+        vid.currentTime = 0;
+        vid.play();
+        setTimeout(() => vid.pause(), 1000);
+      } catch(e) {}
     });
-
-    card.appendChild(thumb);
-
-    const title = document.createElement("div");
-    title.className = "card-title";
-    title.innerText = video.title;
-    card.appendChild(title);
-
+    card.addEventListener('mouseleave', () => card.querySelector('video').pause());
+    card.addEventListener('click', () => window.open(video.url, '_blank'));
     grid.appendChild(card);
   });
 }
 
-btnShort.addEventListener("click", () => {
-  btnShort.classList.add("active");
-  btnLong.classList.remove("active");
-  currentData = videosShort;
-  renderVideos(filterVideos());
-});
-
-btnLong.addEventListener("click", () => {
-  btnLong.classList.add("active");
-  btnShort.classList.remove("active");
-  currentData = videosLong;
-  renderVideos(filterVideos());
-});
-
-searchInput.addEventListener("input", () => {
-  renderVideos(filterVideos());
-});
-
-function filterVideos() {
-  const query = searchInput.value.toLowerCase();
-  return currentData.filter(v => v.title.toLowerCase().includes(query));
+function switchToShort() {
+  currentVideos = videosShort;
+  setActiveButton('shortBtn');
+  renderVideos(currentVideos);
 }
 
-renderVideos(currentData);
+function switchToLong() {
+  currentVideos = videosLong;
+  setActiveButton('longBtn');
+  renderVideos(currentVideos);
+}
+
+function switchToPopular() {
+  currentVideos = videosPopular;
+  setActiveButton('popularBtn');
+  renderVideos(currentVideos);
+}
+
+function setActiveButton(activeId) {
+  ['shortBtn','longBtn','popularBtn'].forEach(id => {
+    document.getElementById(id).classList.toggle('active', id === activeId);
+  });
+}
+
+document.getElementById('searchInput').addEventListener('input', (e) => {
+  const query = e.target.value.toLowerCase();
+  const filtered = currentVideos.filter(v => v.title.toLowerCase().includes(query));
+  renderVideos(filtered);
+});
+
+document.getElementById('shortBtn').addEventListener('click', switchToShort);
+document.getElementById('longBtn').addEventListener('click', switchToLong);
+document.getElementById('popularBtn').addEventListener('click', switchToPopular);
+
+function enterSite() {
+  localStorage.setItem('ageVerified', 'true');
+  document.getElementById('ageGate').style.display = 'none';
+}
+
+window.onload = () => {
+  if (localStorage.getItem('ageVerified')) {
+    document.getElementById('ageGate').style.display = 'none';
+  }
+  renderVideos(currentVideos);
+};
