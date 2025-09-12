@@ -1,84 +1,78 @@
-/* === GLOBAL === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* === GLOBAL STYLE === */
 body {
-  background: #111;
-  color: #fff;
+  margin: 0;
   font-family: Arial, sans-serif;
+  background-color: #111;
+  color: #fff;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  align-items: center;
 }
 
 /* === HEADER === */
 header {
-  background: #1a1a1a;
-  padding: 15px;
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  background: linear-gradient(to right, #e52d27, #b31217);
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 .logo-area {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .logo-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .logo-circle {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: white;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #fff;
+  color: #000;
   font-weight: bold;
-  font-size: 14px;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .logo-text {
+  font-size: 22px;
   font-weight: bold;
-  font-size: 20px;
+  color: white;
 }
 
 .logo-subtext {
   font-size: 12px;
-  color: #ccc;
-  margin-top: 4px;
+  opacity: 0.8;
 }
 
-/* === NAVBAR BUTTONS === */
+/* === NAV BUTTONS === */
 .nav-buttons {
   display: flex;
   gap: 8px;
 }
 
 .nav-buttons button {
-  background: #333;
-  border: none;
+  background: #222;
   color: white;
-  padding: 6px 12px;
+  border: none;
+  padding: 6px 14px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background 0.2s;
+  font-weight: bold;
+  transition: background 0.3s ease;
 }
 
-.nav-buttons button:hover,
 .nav-buttons button.active {
-  background: #555;
+  background: red;
 }
 
 /* === REVIEW VIDEO === */
@@ -86,15 +80,12 @@ header {
   position: relative;
   width: 100%;
   max-width: 640px;
-  margin: 10px auto;
-  border-radius: 10px;
-  overflow: hidden;
+  margin-top: 20px;
 }
 
 .review-video-container video {
   width: 100%;
-  display: block;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .review-play-btn {
@@ -103,54 +94,53 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 40px;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
 }
 
 /* === SEARCH BAR === */
 .search-container {
-  display: flex;
-  justify-content: center;
-  margin: 10px;
+  margin: 20px;
+  width: 90%;
+  max-width: 600px;
 }
 
 .search-container input {
-  width: 90%;
-  max-width: 600px;
-  padding: 8px 12px;
-  border: none;
+  width: 100%;
+  padding: 10px;
   border-radius: 6px;
+  border: none;
+  font-size: 16px;
 }
 
 /* === VIDEO GRID === */
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 8px;
-  padding: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
 }
 
 .video-card {
   position: relative;
-  background: #222;
+  background: #000;
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.2s;
 }
 
-.video-card:hover {
-  transform: scale(1.02);
-}
-
-.video-card video,
-.video-card img {
+.video-card video {
   width: 100%;
-  height: 100%;
   display: block;
-  object-fit: cover;
 }
 
 .play-btn {
@@ -158,23 +148,18 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 28px;
-  background: rgba(0, 0, 0, 0.6);
+  font-size: 30px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 50%;
-  padding: 6px 10px;
-  opacity: 0;
-  transition: opacity 0.2s;
+  padding: 10px;
+  pointer-events: none;
 }
 
-.video-card:hover .play-btn {
-  opacity: 1;
-}
-
-/* === MODAL POPUP === */
+/* === MODAL === */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -182,41 +167,28 @@ header {
   background: rgba(0, 0, 0, 0.9);
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .modal video {
   max-width: 90%;
   max-height: 80%;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .modal .close {
   position: absolute;
   top: 20px;
   right: 30px;
-  font-size: 30px;
-  cursor: pointer;
+  font-size: 40px;
   color: white;
+  cursor: pointer;
 }
 
 /* === FOOTER === */
 footer {
-  text-align: center;
+  margin: 20px;
   font-size: 12px;
-  color: #bbb;
-  padding: 10px 0;
-  margin-top: auto;
-}
-
-/* === MOBILE OPTIMIZATION === */
-@media (max-width: 600px) {
-  .logo-text {
-    font-size: 18px;
-  }
-  .video-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
-  .play-btn {
-    font-size: 24px;
-  }
+  opacity: 0.7;
+  text-align: center;
 }
