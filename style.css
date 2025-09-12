@@ -1,73 +1,100 @@
-body {
+/* === GLOBAL === */
+* {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: #121212;
-  color: white;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  background: #111;
+  color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* === HEADER === */
 header {
-  background: #1e1e1e;
+  background: #1a1a1a;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-area {
   text-align: center;
 }
 
 .logo-row {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 8px;
 }
 
 .logo-circle {
-  background: white;
-  color: #121212;
-  font-weight: bold;
-  padding: 8px 12px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
+  background: white;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .logo-text {
-  font-size: 1.5rem;
   font-weight: bold;
+  font-size: 20px;
 }
 
 .logo-subtext {
-  font-size: 0.85rem;
-  opacity: 0.7;
+  font-size: 12px;
+  color: #ccc;
+  margin-top: 4px;
 }
 
+/* === NAVBAR BUTTONS === */
 .nav-buttons {
   display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 8px;
 }
 
 .nav-buttons button {
-  background: transparent;
-  border: 1px solid #444;
+  background: #333;
+  border: none;
   color: white;
-  padding: 8px 16px;
-  cursor: pointer;
+  padding: 6px 12px;
   border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
 }
 
+.nav-buttons button:hover,
 .nav-buttons button.active {
-  background: white;
-  color: black;
+  background: #555;
 }
 
+/* === REVIEW VIDEO === */
 .review-video-container {
   position: relative;
   width: 100%;
-  max-height: 300px;
+  max-width: 640px;
+  margin: 10px auto;
+  border-radius: 10px;
   overflow: hidden;
 }
 
 .review-video-container video {
   width: 100%;
   display: block;
-  object-fit: cover;
+  border-radius: 10px;
 }
 
 .review-play-btn {
@@ -76,72 +103,120 @@ header {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 40px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   padding: 10px 20px;
   border-radius: 50%;
   cursor: pointer;
 }
 
+/* === SEARCH BAR === */
 .search-container {
-  text-align: center;
+  display: flex;
+  justify-content: center;
   margin: 10px;
 }
 
 .search-container input {
-  padding: 8px;
   width: 90%;
-  border-radius: 6px;
+  max-width: 600px;
+  padding: 8px 12px;
   border: none;
+  border-radius: 6px;
 }
 
+/* === VIDEO GRID === */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 10px;
+  gap: 8px;
   padding: 10px;
 }
 
 .video-card {
   position: relative;
-  cursor: pointer;
-}
-
-.video-card video {
-  width: 100%;
+  background: #222;
   border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
 }
 
-.video-card .play-btn {
+.video-card:hover {
+  transform: scale(1.02);
+}
+
+.video-card video,
+.video-card img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.play-btn {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 24px;
-  color: white;
+  font-size: 28px;
   background: rgba(0, 0, 0, 0.6);
-  padding: 8px;
   border-radius: 50%;
+  padding: 6px 10px;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
+.video-card:hover .play-btn {
+  opacity: 1;
+}
+
+/* === MODAL POPUP === */
 .modal {
   display: none;
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
   justify-content: center;
   align-items: center;
 }
 
 .modal video {
-  width: 90%;
+  max-width: 90%;
   max-height: 80%;
+  border-radius: 10px;
 }
 
 .modal .close {
   position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 32px;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
   cursor: pointer;
+  color: white;
+}
+
+/* === FOOTER === */
+footer {
+  text-align: center;
+  font-size: 12px;
+  color: #bbb;
+  padding: 10px 0;
+  margin-top: auto;
+}
+
+/* === MOBILE OPTIMIZATION === */
+@media (max-width: 600px) {
+  .logo-text {
+    font-size: 18px;
+  }
+  .video-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+  .play-btn {
+    font-size: 24px;
+  }
 }
