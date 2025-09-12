@@ -1,38 +1,28 @@
-/* ============ GLOBAL ============ */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #0f0f0f;
+  background: #121212;
   color: white;
 }
 
-/* ============ HEADER ============ */
 header {
-  background: #181818;
-  padding: 12px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: #1e1e1e;
+  padding: 15px;
   text-align: center;
-  gap: 10px;
 }
 
 .logo-row {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 8px;
-  justify-content: center;
 }
 
 .logo-circle {
-  width: 40px;
-  height: 40px;
-  background: #ff4444;
-  color: white;
+  background: white;
+  color: #121212;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 8px 12px;
   border-radius: 50%;
 }
 
@@ -42,30 +32,31 @@ header {
 }
 
 .logo-subtext {
-  font-size: 0.8rem;
-  color: #aaa;
+  font-size: 0.85rem;
+  opacity: 0.7;
 }
 
 .nav-buttons {
   display: flex;
+  justify-content: center;
   gap: 10px;
+  margin-top: 10px;
 }
 
 .nav-buttons button {
-  background: none;
-  border: none;
-  color: #aaa;
-  font-size: 1rem;
-  padding: 6px 10px;
+  background: transparent;
+  border: 1px solid #444;
+  color: white;
+  padding: 8px 16px;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .nav-buttons button.active {
-  color: white;
-  border-bottom: 2px solid #ff4444;
+  background: white;
+  color: black;
 }
 
-/* ============ REVIEW VIDEO ============ */
 .review-video-container {
   position: relative;
   width: 100%;
@@ -76,7 +67,7 @@ header {
 .review-video-container video {
   width: 100%;
   display: block;
-  border-radius: 0;
+  object-fit: cover;
 }
 
 .review-play-btn {
@@ -84,32 +75,39 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 3rem;
-  color: white;
-  background: rgba(0, 0, 0, 0.5);
+  font-size: 40px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 10px 20px;
   border-radius: 50%;
-  padding: 10px 15px;
   cursor: pointer;
 }
 
-/* ============ VIDEO GRID ============ */
+.search-container {
+  text-align: center;
+  margin: 10px;
+}
+
+.search-container input {
+  padding: 8px;
+  width: 90%;
+  border-radius: 6px;
+  border: none;
+}
+
 .video-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px;
-  padding: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+  padding: 10px;
 }
 
 .video-card {
   position: relative;
   cursor: pointer;
-  border-radius: 8px;
-  overflow: hidden;
 }
 
-.video-card img {
+.video-card video {
   width: 100%;
-  display: block;
   border-radius: 8px;
 }
 
@@ -118,43 +116,32 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2rem;
+  font-size: 24px;
   color: white;
   background: rgba(0, 0, 0, 0.6);
+  padding: 8px;
   border-radius: 50%;
-  padding: 4px 8px;
 }
 
-/* ============ MODAL ============ */
 .modal {
   display: none;
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
-  z-index: 999;
 }
 
 .modal video {
   width: 90%;
-  max-width: 600px;
-  border-radius: 10px;
+  max-height: 80%;
 }
 
 .modal .close {
   position: absolute;
-  top: 15px;
+  top: 10px;
   right: 20px;
-  font-size: 2rem;
+  font-size: 32px;
   cursor: pointer;
-  color: white;
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  font-size: 0.8rem;
-  color: #666;
-  padding: 20px 0;
 }
