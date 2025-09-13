@@ -1,4 +1,4 @@
-window.videosShort =
+window.videosShort = [
   { title: "He looks like an inner peace that contradicts reality 😭", url: "https://cdn.videy.co/pJUHLkt51.mp4" },
   { title: "Nutted a simple caption 😉", url: "https://cdn.videy.co/EGFcCPEp1.mp4" },
   { title: "Oh She's Having Her Way", url: "https://cdn.videy.co/7uJnxSnX1.mp4" },
