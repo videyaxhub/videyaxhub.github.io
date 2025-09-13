@@ -41,7 +41,7 @@ function createVideoCard(vid, thumbUrl, idx) {
   const card = document.createElement('div');
   card.className = 'video-card';
   card.tabIndex = 0;
-  // THUMBNAIL + preview 1 second on tap (mobile) or click (desktop)
+  // THUMBNAIL + preview 1 second on tap/click
   const thumbCont = document.createElement('div');
   thumbCont.className = 'thumbnail-container';
   const thumbVid = document.createElement('video');
@@ -94,28 +94,54 @@ function createVideoCard(vid, thumbUrl, idx) {
 const videoModal = document.getElementById('videoModal');
 const closeModal = document.getElementById('closeModal');
 const fullVideo = document.getElementById('fullVideo');
+const modalSpinner = document.getElementById('modalSpinner');
 function showModal(url) {
   fullVideo.querySelector('source').src = url;
-  fullVideo.load();
-  fullVideo.play();
+  modalSpinner.style.display = "block";
   videoModal.style.display = 'flex';
   closeModal.focus();
+  injectAdModal();
+  fullVideo.load();
+  fullVideo.oncanplay = function() {
+    modalSpinner.style.display = "none";
+    fullVideo.play();
+  };
 }
 closeModal.onclick = function() {
   videoModal.style.display = 'none';
   fullVideo.pause();
+  modalSpinner.style.display = "none";
 };
 closeModal.onkeydown = function(e) {
   if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
     videoModal.style.display = 'none';
     fullVideo.pause();
+    modalSpinner.style.display = "none";
   }
 };
 window.onclick = function(event) {
   if (event.target == videoModal) {
     videoModal.style.display = 'none';
     fullVideo.pause();
+    modalSpinner.style.display = "none";
   }
 };
+
+// --- Ensure ad in modal always visible and reloads ---
+function injectAdModal() {
+  const adModalTop = document.getElementById('adModalTop');
+  adModalTop.innerHTML = `
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
+  `;
+}
 
 window.onload = function() { renderGrid(); };
