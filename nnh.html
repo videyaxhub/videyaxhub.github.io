@@ -1,145 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VideoHub</title>
   <style>
-    body { background: #000; color: #fff; margin: 0; font-family: Arial; }
-    header { display: flex; justify-content: space-between; padding: 10px 20px; background: #ff6600; }
-    .logo { font-weight: bold; font-size: 1.5em; }
-    nav button { background: none; border: none; color: #fff; cursor: pointer; margin: 0 5px; font-size: 1em; }
-    .grid-slider { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 20px; }
-    .card { position: relative; cursor: pointer; border-radius: 10px; overflow: hidden; background: #111; transition: transform 0.3s; }
-    .card video { width: 100%; height: auto; display: block; object-fit: cover; }
-    .card-title { padding: 5px; text-align: center; font-size: 0.9em; }
-    .play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.6); border-radius: 50%; padding: 10px; }
-    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 999; }
-    .modal.active { display: flex; }
-    .modal-content { position: relative; width: 80%; max-width: 900px; }
-    .modal iframe { width: 100%; height: 500px; border: none; border-radius: 10px; }
-    .modal-close { position: absolute; top: -40px; right: 0; font-size: 2em; color: white; background: none; border: none; cursor: pointer; }
+    /* === RESET === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #111;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    /* === HEADER === */
+    header {
+      background: linear-gradient(to right, #ff0000, #ff4d00);
+      width: 100vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 16px rgba(255,0,0,0.08);
+    }
+    .nav-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nav-left h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .nav-left p {
+      font-size: 0.9rem;
+      color: #ffdcdc;
+      margin-top: 3px;
+      line-height: 1.2;
+    }
+    .nav-right {
+      display: flex;
+      gap: 10px;
+    }
+    .nav-right button {
+      padding: 6px 18px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #222;
+      color: white;
+      font-size: 1rem;
+      transition: background 0.2s;
+    }
+    .nav-right button.active, .nav-right button:focus {
+      background: #e50914;
+      color: #fff;
+    }
+    main {
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+      position: relative;
+    }
+    /* === VIDEO PREVIEW === */
+    #preview {
+      max-height: 60vh;
+      max-width: 95vw;
+      margin-top: 0;
+      margin-bottom: 12px;
+      display: block;
+      object-fit: contain;
+      background: black;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    }
+    .play-button {
+      display: block;
+      margin: 0 auto 20px auto;
+      background: #e50914;
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 12px 38px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 2px 12px rgba(229,9,20,0.12);
+    }
+    .play-button:hover {
+      background: #b0060c;
+      transform: scale(1.05);
+    }
+    /* === MODAL === */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1500;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: auto;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-content {
+      position: relative;
+      margin: 5vh auto;
+      background: #222;
+      border-radius: 18px;
+      padding: 24px;
+      max-width: 700px;
+      width: 95vw;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-content video {
+      width: 100%;
+      max-height: 65vh;
+      border-radius: 12px;
+      background: #000;
+    }
+    .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 18px;
+      font-size: 2rem;
+      color: #fff;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      z-index: 10;
+      transition: color 0.2s;
+    }
+    .close-btn:hover {
+      color: #e50914;
+    }
+    /* === RESPONSIVE === */
+    @media (max-width:600px) {
+      header, main {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      .modal-content {
+        padding: 8px;
+      }
+      .close-btn {
+        font-size: 1.4rem;
+        top: 8px;
+        right: 10px;
+      }
+      #preview {
+        max-height: 38vh;
+      }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">🔥 VideoHub</div>
-    <nav>
-      <button onclick="loadCategory('short')">Short</button>
-      <button onclick="loadCategory('long')">Long</button>
-      <button onclick="loadCategory('popular')">Popular</button>
-    </nav>
-  </header>
-
-  <div class="grid-slider" id="slider"></div>
-
-  <!-- Modal -->
-  <div class="modal" id="modal">
-    <div class="modal-content">
-      <button class="modal-close" aria-label="Close Video">&times;</button>
-      <iframe id="modal-iframe" allow="autoplay; fullscreen" allowfullscreen></iframe>
-    </div>
+<header>
+  <div class="nav-left">
+    <h1>VH</h1>
+    <p>VideoHub<br>Short &amp; Long clips — streaming from CDN</p>
   </div>
+  <div class="nav-right">
+    <button class="active" data-type="short">Short</button>
+    <button data-type="long">Long</button>
+    <button data-type="popular">Popular</button>
+  </div>
+</header>
+<main>
+  <!-- PREVIEW VIDEO -->
+  <video id="preview" muted autoplay playsinline>
+    <source src="https://cdn.example.com/video.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <!-- PLAY BUTTON -->
+  <button id="playBtn" class="play-button">▶ Play</button>
+  <!-- Video List Area (for Short/Long/Popular) -->
+  <div id="videoList"></div>
+</main>
+<!-- MODAL -->
+<div id="videoModal" class="modal">
+  <div class="modal-content">
+    <button id="closeModal" class="close-btn" title="Close">&times;</button>
+    <video id="fullVideo" controls autoplay>
+      <source src="https://cdn.example.com/video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+<script>
+  // Button logic for modal
+  const playBtn = document.getElementById('playBtn');
+  const videoModal = document.getElementById('videoModal');
+  const closeModal = document.getElementById('closeModal');
+  const fullVideo = document.getElementById('fullVideo');
+  const preview = document.getElementById('preview');
 
-  <script src="videos_short.js"></script>
-  <script src="videos_long.js"></script>
-  <script src="videos_popular.js"></script>
-  <script>
-  let currentCategory = "short";
-  let videos = [];
-  let allPreviewVideos = [];
+  // Play button opens modal and plays video
+  playBtn.onclick = function() {
+    videoModal.style.display = 'flex';
+    fullVideo.currentTime = 0;
+    fullVideo.play();
+  };
+  // Close modal
+  closeModal.onclick = function() {
+    videoModal.style.display = 'none';
+    fullVideo.pause();
+  };
+  // Close modal when clicking outside modal-content
+  window.onclick = function(event) {
+    if (event.target == videoModal) {
+      videoModal.style.display = 'none';
+      fullVideo.pause();
+    }
+  };
 
-  function loadCategory(cat) {
-    currentCategory = cat;
-    if (cat === "short") videos = videosShort;
-    if (cat === "long") videos = videosLong;
-    if (cat === "popular") videos = videosPopular;
-    renderGrid(videos);
+  // Load video lists (stub function, connect with your JS files)
+  const navButtons = document.querySelectorAll('.nav-right button');
+  const videoList = document.getElementById('videoList');
+  navButtons.forEach(btn => {
+    btn.onclick = function() {
+      navButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const type = btn.getAttribute('data-type');
+      loadVideoList(type);
+    }
+  });
+
+  function loadVideoList(type) {
+    // You can replace the below block with your actual JS logic:
+    // For example: window.loadVideosShort(), window.loadVideosLong(), etc.
+    videoList.innerHTML = '';
+    if (type === 'short') {
+      // Example: Call your videos_short.js here
+      videoList.innerHTML = `<div style="margin:22px auto;color:#ccc;">Short clips will be listed here.</div>`;
+    } else if (type === 'long') {
+      // Example: Call your videos_long.js here
+      videoList.innerHTML = `<div style="margin:22px auto;color:#ccc;">Long clips will be listed here.</div>`;
+    } else if (type === 'popular') {
+      // Example: Call your videos_popular.js here
+      videoList.innerHTML = `<div style="margin:22px auto;color:#ccc;">Popular clips will be listed here.</div>`;
+    }
   }
 
-  function renderGrid(list) {
-    const slider = document.getElementById("slider");
-    slider.innerHTML = "";
-    allPreviewVideos = [];
-
-    list.forEach(movie => {
-      const card = document.createElement("div");
-      card.className = "card";
-
-      // Video preview (lazy load)
-      const vid = document.createElement("video");
-      vid.setAttribute("preload", "metadata");
-      vid.muted = true;
-      vid.playsInline = true;
-      vid.loop = true;
-      vid.dataset.src = movie.video + "#t=0,1"; // simpan url di data-src
-      card.appendChild(vid);
-      allPreviewVideos.push(vid);
-
-      const playBtn = document.createElement("div");
-      playBtn.className = "play-btn";
-      playBtn.innerHTML = `<svg viewBox="0 0 24 24" width="40" height="40"><path fill="white" d="M8 5v14l11-7z"/></svg>`;
-      card.appendChild(playBtn);
-
-      const title = document.createElement("div");
-      title.className = "card-title";
-      title.textContent = movie.title;
-      card.appendChild(title);
-
-      card.onclick = () => openModal(movie.video);
-      slider.appendChild(card);
-    });
-
-    lazyLoadVideos();
-  }
-
-  function lazyLoadVideos() {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        const video = entry.target;
-        if (entry.isIntersecting) {
-          if (!video.src) {
-            video.src = video.dataset.src;
-            video.play().catch(() => {});
-          }
-        } else {
-          video.pause();
-        }
-      });
-    }, { threshold: 0.5 });
-
-    allPreviewVideos.forEach(video => observer.observe(video));
-  }
-
-  const modal = document.getElementById("modal");
-  const modalIframe = document.getElementById("modal-iframe");
-  modal.querySelector(".modal-close").onclick = closeModal;
-  modal.onclick = e => { if (e.target === modal) closeModal(); };
-
-  function openModal(videoUrl) {
-    pauseAllPreviews();
-    modal.classList.add("active");
-    modalIframe.src = videoUrl + "?autoplay=1";
-  }
-
-  function closeModal() {
-    modal.classList.remove("active");
-    modalIframe.src = "";
-    playAllPreviews();
-  }
-
-  function pauseAllPreviews() {
-    allPreviewVideos.forEach(v => v.pause());
-  }
-
-  function playAllPreviews() {
-    allPreviewVideos.forEach(v => {
-      if (v.src) v.play().catch(() => {});
-    });
-  }
-
-  loadCategory("short");
+  // Initial load (short)
+  loadVideoList('short');
 </script>
-
-  </script>
 </body>
 </html>
