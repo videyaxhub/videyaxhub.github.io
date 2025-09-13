@@ -40,8 +40,7 @@ function renderGrid() {
 function createVideoCard(vid, thumbUrl, idx) {
   const card = document.createElement('div');
   card.className = 'video-card';
-  card.tabIndex = 0;
-  // THUMBNAIL + preview 1 second on tap/click
+  // THUMBNAIL + preview 1 second on hover
   const thumbCont = document.createElement('div');
   thumbCont.className = 'thumbnail-container';
   const thumbVid = document.createElement('video');
@@ -50,7 +49,7 @@ function createVideoCard(vid, thumbUrl, idx) {
   thumbVid.playsInline = true;
   thumbVid.preload = "metadata";
   thumbVid.poster = ""; // add image thumbnail if available
-  thumbVid.setAttribute("loading", "lazy");
+  thumbVid.style.pointerEvents = "none";
   thumbCont.appendChild(thumbVid);
 
   // Overlay play button
@@ -58,26 +57,26 @@ function createVideoCard(vid, thumbUrl, idx) {
   overlay.className = 'thumbnail-overlay';
   const playBtn = document.createElement('button');
   playBtn.className = 'play-overlay-btn';
-  playBtn.innerHTML = `<svg width="36" height="36" viewBox="0 0 36 36" fill="none">
-    <circle cx="18" cy="18" r="18" fill="#e50914"/>
-    <polygon points="15,12 27,18 15,24" fill="#fff"/>
+  playBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+    <circle cx="14" cy="14" r="14" fill="#e50914"/>
+    <polygon points="11,9 21,14 11,19" fill="#fff"/>
   </svg>`;
   overlay.appendChild(playBtn);
 
-  // Preview 1 second on tap/click
-  let previewing = false;
-  function previewPlay() {
-    if (previewing) return;
-    previewing = true;
+  // Preview 1 second on hover
+  thumbCont.onmouseenter = () => {
     thumbVid.currentTime = 0;
     thumbVid.play();
-    setTimeout(() => { thumbVid.pause(); thumbVid.currentTime = 0; previewing = false; }, 1000);
-  }
-  thumbCont.onclick = previewPlay;
+    setTimeout(() => { thumbVid.pause(); thumbVid.currentTime = 0; }, 1000);
+  };
+  thumbCont.onmouseleave = () => { thumbVid.pause(); thumbVid.currentTime = 0; };
+
+  // Modal play
   playBtn.onclick = (e) => {
     e.stopPropagation();
     showModal(vid.url);
   };
+
   thumbCont.appendChild(overlay);
 
   // Title
@@ -94,54 +93,21 @@ function createVideoCard(vid, thumbUrl, idx) {
 const videoModal = document.getElementById('videoModal');
 const closeModal = document.getElementById('closeModal');
 const fullVideo = document.getElementById('fullVideo');
-const modalSpinner = document.getElementById('modalSpinner');
 function showModal(url) {
   fullVideo.querySelector('source').src = url;
-  modalSpinner.style.display = "block";
-  videoModal.style.display = 'flex';
-  closeModal.focus();
-  injectAdModal();
   fullVideo.load();
-  fullVideo.oncanplay = function() {
-    modalSpinner.style.display = "none";
-    fullVideo.play();
-  };
+  fullVideo.play();
+  videoModal.style.display = 'flex';
 }
 closeModal.onclick = function() {
   videoModal.style.display = 'none';
   fullVideo.pause();
-  modalSpinner.style.display = "none";
-};
-closeModal.onkeydown = function(e) {
-  if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
-    videoModal.style.display = 'none';
-    fullVideo.pause();
-    modalSpinner.style.display = "none";
-  }
 };
 window.onclick = function(event) {
   if (event.target == videoModal) {
     videoModal.style.display = 'none';
     fullVideo.pause();
-    modalSpinner.style.display = "none";
   }
 };
-
-// --- Ensure ad in modal always visible and reloads ---
-function injectAdModal() {
-  const adModalTop = document.getElementById('adModalTop');
-  adModalTop.innerHTML = `
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
-        'format' : 'iframe',
-        'height' : 50,
-        'width' : 320,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
-  `;
-}
 
 window.onload = function() { renderGrid(); };
