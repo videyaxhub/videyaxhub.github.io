@@ -4,224 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VideoHub</title>
-  <style>
-    :root {
-      --netflix-red: #e50914;
-      --netflix-dark: #221f1f;
-      --netflix-gradient: linear-gradient(to right, #e50914 0%, #b0060c 40%, #221f1f 100%);
-      --netflix-btn-shadow: 0 2px 16px rgba(229,9,20,0.17);
-      --netflix-btn-radius: 9px;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #111;
-      color: #fff;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      min-height: 100vh;
-    }
-    header {
-      width: 100vw;
-      background: var(--netflix-gradient);
-      color: #fff;
-      padding: 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 16px rgba(229,9,20,0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-    }
-    .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 32px 10px 32px;
-    }
-    .nav-left h1 {
-      font-size: 2.1rem;
-      font-weight: bold;
-      margin-bottom: 4px;
-      letter-spacing: 1px;
-      background: #ffb3b3;
-      color: #e50914;
-      display: inline-block;
-      padding: 8px 18px;
-      border-radius: 12px;
-    }
-    .nav-left p {
-      font-size: 1.05rem;
-      color: #ffdcdc;
-      margin-top: 0;
-      line-height: 1.2;
-      font-weight: 400;
-    }
-    .nav-right {
-      display: flex;
-      gap: 10px;
-    }
-    .nav-right button {
-      padding: 8px 26px;
-      border: none;
-      border-radius: var(--netflix-btn-radius);
-      font-weight: bold;
-      font-size: 1.07rem;
-      cursor: pointer;
-      background: #232323;
-      color: #fff;
-      box-shadow: var(--netflix-btn-shadow);
-      transition: background 0.2s, color 0.2s;
-      outline: none;
-    }
-    .nav-right button.active {
-      background: var(--netflix-red);
-      color: #fff;
-    }
-    .nav-right button:not(.active):hover {
-      background: #333;
-    }
-    .search-bar {
-      width: 100%;
-      max-width: 480px;
-      margin: 14px auto 8px auto;
-      display: block;
-      padding: 0;
-      text-align: center;
-    }
-    .search-bar input {
-      width: 100%;
-      padding: 12px 16px;
-      font-size: 1.1rem;
-      border-radius: 7px;
-      border: none;
-      background: #221f1f;
-      color: #fff;
-      box-shadow: 0 2px 8px #0003 inset;
-      outline: none;
-      border: 1.5px solid #444;
-      transition: border 0.2s;
-    }
-    .search-bar input:focus {
-      border: 2px solid var(--netflix-red);
-    }
-    .netflix-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
-      gap: 28px 20px;
-      padding: 38px 32px 18px 32px;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
-      min-height: 400px;
-    }
-    .video-card {
-      background: #181818;
-      border-radius: 16px;
-      box-shadow: 0 2px 18px #0006;
-      overflow: hidden;
-      position: relative;
-      transition: transform 0.18s;
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      min-height: 260px;
-      user-select: none;
-    }
-    .video-card:hover {
-      transform: scale(1.05);
-      z-index: 2;
-    }
-    .thumbnail-container {
-      position: relative;
-      width: 100%;
-      height: 134px;
-      background: #000;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .thumbnail-container img,
-    .thumbnail-container video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 0;
-      background: #000;
-    }
-    .thumbnail-overlay {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-    .play-overlay-btn {
-      pointer-events: auto;
-      background: rgba(229,9,20,0.91);
-      color: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 54px;
-      height: 54px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      box-shadow: 0 2px 20px #e5091455;
-      font-size: 2.2rem;
-      cursor: pointer;
-      transition: background 0.18s, transform 0.18s;
-      outline: none;
-    }
-    .play-overlay-btn:hover {
-      background: #b0060c;
-      transform: scale(1.11);
-    }
-    .video-title {
-      padding: 12px 18px 10px 18px;
-      font-size: 1.09rem;
-      font-weight: 500;
-      color: #fff;
-      letter-spacing: 0.2px;
-      text-align: left;
-      flex: 1 1 auto;
-      display: flex;
-      align-items: flex-end;
-    }
-    .netflix-footer {
-      text-align: center;
-      font-size: 0.95rem;
-      color: #ccc;
-      margin: 40px 0 10px 0;
-      opacity: 0.92;
-    }
-    .netflix-footer b { color: #fff; }
-    .disclaimer { color: #b5b5b5; font-size:0.97rem; }
-    .privacy { color: #7c7c7c; font-size:0.95rem; }
-    @media (max-width: 900px) {
-      .netflix-grid {
-        grid-template-columns: repeat(auto-fill,minmax(160px,1fr));
-        padding: 22px 8px 8px 8px;
-      }
-      .video-title { font-size: 0.97rem; padding: 9px 8px 8px 12px; }
-      .thumbnail-container { height: 90px; }
-      .play-overlay-btn { width: 42px; height: 42px; font-size: 1.6rem; }
-    }
-    @media (max-width: 600px) {
-      .header-row { padding: 12px 10px 7px 10px; }
-      .netflix-grid { padding: 8px 2vw 8px 2vw; gap:18px 8px; }
-      .video-card { min-height: 160px;}
-      .video-title { font-size: 0.9rem; padding: 7px 7px 7px 10px;}
-      .thumbnail-container { height: 56px;}
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -240,9 +23,37 @@
       <input type="text" id="searchInput" placeholder="Search videos...">
     </div>
   </header>
+  <!-- AD TOP -->
+  <div class="ad-top">
+    <!-- Top ad code -->
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
+  </div>
   <main>
     <div class="netflix-grid" id="videoGrid"></div>
   </main>
+  <!-- AD BOTTOM -->
+  <div class="ad-bottom">
+    <!-- Bottom ad code -->
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '97769e31ab76979e0ee340bc5c857351',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/97769e31ab76979e0ee340bc5c857351/invoke.js"></script>
+  </div>
   <div class="netflix-footer">
     <div class="disclaimer">
       <b>Disclaimer:</b> All videos are for entertainment only. This site does not host or store any media files; it only links to external sources.<br>
@@ -255,6 +66,19 @@
   <!-- Modal for player -->
   <div id="videoModal" class="modal">
     <div class="modal-content">
+      <div class="ad-modal-top">
+        <!-- Modal top ad code -->
+        <script type="text/javascript">
+          atOptions = {
+            'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
+      </div>
       <button id="closeModal" class="close-btn" title="Close">&times;</button>
       <video id="fullVideo" controls autoplay>
         <source src="" type="video/mp4">
@@ -266,127 +90,6 @@
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
-  <script>
-    // --- DATA ---
-    function getVideoArray(type) {
-      if (type === 'short') return window.videosShort || [];
-      if (type === 'long') return window.videosLong || [];
-      if (type === 'popular') return window.videosPopular || [];
-      return [];
-    }
-    // --- CATEGORY ---
-    const navButtons = document.querySelectorAll('.nav-right button');
-    let currentType = "short";
-    navButtons.forEach(btn => {
-      btn.onclick = function() {
-        navButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentType = btn.getAttribute('data-type');
-        renderGrid();
-      }
-    });
-    // --- SEARCH ---
-    const searchInput = document.getElementById('searchInput');
-    searchInput.oninput = function() { renderGrid(); };
-
-    // --- RENDER GRID ---
-    function renderGrid() {
-      const grid = document.getElementById('videoGrid');
-      let arr = getVideoArray(currentType);
-      const q = searchInput.value.trim().toLowerCase();
-      if (q) arr = arr.filter(v => v.title.toLowerCase().includes(q));
-      grid.innerHTML = '';
-      if (!arr.length) {
-        grid.innerHTML = '<div style="color:#ccc;text-align:center;font-size:1.3rem;margin:40px auto;">No videos found.</div>';
-        return;
-      }
-      // Random thumbnail for first card
-      let randomThumbIdx = Math.floor(Math.random() * arr.length);
-      let thumbUrl = arr[randomThumbIdx].url;
-      arr = arr.map((v,idx) => ({...v, isThumb: idx === randomThumbIdx}));
-      arr.forEach((vid,i) => {
-        const thumb = vid.isThumb ? thumbUrl : vid.url;
-        grid.appendChild(createVideoCard(vid, thumb, i));
-      });
-    }
-
-    // --- NETFLIX STYLE CARD ---
-    function createVideoCard(vid, thumbUrl, idx) {
-      const card = document.createElement('div');
-      card.className = 'video-card';
-      // Thumbnail + preview 1 sec on hover
-      const thumbCont = document.createElement('div');
-      thumbCont.className = 'thumbnail-container';
-      // For demo, thumbnail uses <video> tag; change to <img> for image thumbnail
-      const thumbVid = document.createElement('video');
-      thumbVid.src = thumbUrl;
-      thumbVid.muted = true;
-      thumbVid.playsInline = true;
-      thumbVid.preload = "metadata";
-      thumbVid.poster = ""; // add thumbnail image url if needed
-      thumbVid.style.pointerEvents = "none";
-      thumbCont.appendChild(thumbVid);
-
-      // Overlay play button
-      const overlay = document.createElement('div');
-      overlay.className = 'thumbnail-overlay';
-      const playBtn = document.createElement('button');
-      playBtn.className = 'play-overlay-btn';
-      playBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="#e50914"/>
-        <polygon points="11,9 21,14 11,19" fill="#fff"/>
-      </svg>`;
-      overlay.appendChild(playBtn);
-
-      // Preview 1 second on hover
-      thumbCont.onmouseenter = () => {
-        thumbVid.currentTime = 0;
-        thumbVid.play();
-        setTimeout(() => { thumbVid.pause(); thumbVid.currentTime = 0; }, 1000);
-      };
-      thumbCont.onmouseleave = () => { thumbVid.pause(); thumbVid.currentTime = 0; };
-
-      // Modal play
-      playBtn.onclick = (e) => {
-        e.stopPropagation();
-        showModal(vid.url);
-      };
-
-      thumbCont.appendChild(overlay);
-
-      // Title
-      const title = document.createElement('div');
-      title.className = 'video-title';
-      title.textContent = vid.title;
-
-      card.appendChild(thumbCont);
-      card.appendChild(title);
-      return card;
-    }
-
-    // --- MODAL PLAYER ---
-    const videoModal = document.getElementById('videoModal');
-    const closeModal = document.getElementById('closeModal');
-    const fullVideo = document.getElementById('fullVideo');
-    function showModal(url) {
-      fullVideo.querySelector('source').src = url;
-      fullVideo.load();
-      fullVideo.play();
-      videoModal.style.display = 'flex';
-    }
-    closeModal.onclick = function() {
-      videoModal.style.display = 'none';
-      fullVideo.pause();
-    };
-    window.onclick = function(event) {
-      if (event.target == videoModal) {
-        videoModal.style.display = 'none';
-        fullVideo.pause();
-      }
-    };
-
-    // --- INITIAL ---
-    window.onload = function() { renderGrid(); };
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>
