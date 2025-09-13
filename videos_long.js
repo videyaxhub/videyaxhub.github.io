@@ -1,4 +1,4 @@
-const videosLong = [
+window.videosLong = [
   { title: "Auntie sleepin like she the dream I been tryna catch", url: "https://cdn.videy.co/eXR3LYr91.mp4" },
   { title: "Just me, the couch, and a storm of thoughts", url: "https://cdn.videy.co/UaWk9f371.mp4" },
   { title: "Y’all want coffee or compliments? Cuz I’m servin both", url: "https://cdn.videy.co/oHlRqQXt1.mp4" },
