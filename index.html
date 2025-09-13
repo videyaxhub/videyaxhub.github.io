@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VideoHub Final</title>
+  <title>VideoHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -23,8 +23,9 @@
       <input type="text" id="searchInput" placeholder="Search videos...">
     </div>
   </header>
-  <!-- Ad Top (outside modal) -->
+  <!-- AD TOP -->
   <div class="ad-top">
+    <!-- Top ad code -->
     <script type="text/javascript">
       atOptions = {
         'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
@@ -39,7 +40,9 @@
   <main>
     <div class="netflix-grid" id="videoGrid"></div>
   </main>
+  <!-- AD BOTTOM -->
   <div class="ad-bottom">
+    <!-- Bottom ad code -->
     <script type="text/javascript">
       atOptions = {
         'key' : '97769e31ab76979e0ee340bc5c857351',
@@ -64,7 +67,7 @@
   <div id="videoModal" class="modal">
     <div class="modal-content">
       <div class="ad-modal-top">
-        <!-- Modal ad code, must be IN HTML, not via JS -->
+        <!-- Modal top ad code -->
         <script type="text/javascript">
           atOptions = {
             'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
@@ -76,13 +79,14 @@
         </script>
         <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
       </div>
-      <button id="closeModal" class="close-btn" title="Close" tabindex="0" aria-label="Close video">&times;</button>
-      <video id="fullVideo" controls preload="metadata" playsinline>
+      <button id="closeModal" class="close-btn" title="Close">&times;</button>
+      <video id="fullVideo" controls autoplay>
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
   </div>
+  <!-- Import JS video lists -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
