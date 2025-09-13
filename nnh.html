@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VideoHub</title>
   <style>
-    /* === RESET === */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: #111;
       font-family: Arial, sans-serif;
-      color: #fff;
+      color: #a;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
     }
-    /* === HEADER === */
     header {
       background: linear-gradient(to right, #ff0000, #ff4d00);
       width: 100vw;
@@ -33,26 +27,10 @@
       z-index: 1000;
       box-shadow: 0 2px 16px rgba(255,0,0,0.08);
     }
-    .nav-left {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .nav-left h1 {
-      font-size: 1.5rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-    }
-    .nav-left p {
-      font-size: 0.9rem;
-      color: #ffdcdc;
-      margin-top: 3px;
-      line-height: 1.2;
-    }
-    .nav-right {
-      display: flex;
-      gap: 10px;
-    }
+    .nav-left { display: flex; flex-direction: column; align-items: flex-start; }
+    .nav-left h1 { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+    .nav-left p { font-size: 0.9rem; color: #ffdcdc; margin-top: 3px; line-height: 1.2; }
+    .nav-right { display: flex; gap: 10px; }
     .nav-right button {
       padding: 6px 18px;
       border: none;
@@ -76,7 +54,6 @@
       margin-top: 20px;
       position: relative;
     }
-    /* === VIDEO PREVIEW === */
     #preview {
       max-height: 60vh;
       max-width: 95vw;
@@ -106,15 +83,12 @@
       background: #b0060c;
       transform: scale(1.05);
     }
-    /* === MODAL === */
     .modal {
       display: none;
       position: fixed;
       z-index: 1500;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
+      left: 0; top: 0;
+      width: 100vw; height: 100vh;
       overflow: auto;
       background: rgba(0,0,0,0.85);
       align-items: center;
@@ -141,8 +115,7 @@
     }
     .close-btn {
       position: absolute;
-      top: 12px;
-      right: 18px;
+      top: 12px; right: 18px;
       font-size: 2rem;
       color: #fff;
       background: none;
@@ -152,82 +125,80 @@
       z-index: 10;
       transition: color 0.2s;
     }
-    .close-btn:hover {
-      color: #e50914;
-    }
-    /* === RESPONSIVE === */
+    .close-btn:hover { color: #e50914; }
     @media (max-width:600px) {
-      header, main {
-        padding-left: 0;
-        padding-right: 0;
-      }
-      .modal-content {
-        padding: 8px;
-      }
-      .close-btn {
-        font-size: 1.4rem;
-        top: 8px;
-        right: 10px;
-      }
-      #preview {
-        max-height: 38vh;
-      }
+      header, main { padding-left: 0; padding-right: 0; }
+      .modal-content { padding: 8px; }
+      .close-btn { font-size: 1.4rem; top: 8px; right: 10px; }
+      #preview { max-height: 38vh; }
     }
+    #videoList ul {list-style:none;padding:0;}
+    #videoList li {margin-bottom:16px;}
+    .vid-item {
+      background:#222;color:#fff;padding:10px 20px;border-radius:8px;
+      border:none;font-size:1rem;cursor:pointer;width:100%;text-align:left;
+      transition:background 0.2s;
+    }
+    .vid-item:hover {background:#e50914;color:#fff;}
   </style>
 </head>
 <body>
 <header>
   <div class="nav-left">
     <h1>VH</h1>
-    <p>VideoHub<br>Short &amp; Long clips — streaming from CDN</p>
+    <p>VideoHub<br>Cuplikan Pendek & Panjang — streaming dari CDN</p>
   </div>
   <div class="nav-right">
-    <button class="active" data-type="short">Short</button>
-    <button data-type="long">Long</button>
-    <button data-type="popular">Popular</button>
+    <button class="active" data-type="short">Pendek</button>
+    <button data-type="long">Panjang</button>
+    <button data-type="popular">Populer</button>
   </div>
 </header>
 <main>
   <!-- PREVIEW VIDEO -->
   <video id="preview" muted autoplay playsinline>
-    <source src="https://cdn.example.com/video.mp4" type="video/mp4">
-    Your browser does not support the video tag.
+    <source src="" type="video/mp4">
+    Browser kamu tidak mendukung video.
   </video>
   <!-- PLAY BUTTON -->
-  <button id="playBtn" class="play-button">▶ Play</button>
-  <!-- Video List Area (for Short/Long/Popular) -->
+  <button id="playBtn" class="play-button">▶ Putar</button>
+  <!-- Daftar video -->
   <div id="videoList"></div>
 </main>
 <!-- MODAL -->
 <div id="videoModal" class="modal">
   <div class="modal-content">
-    <button id="closeModal" class="close-btn" title="Close">&times;</button>
+    <button id="closeModal" class="close-btn" title="Tutup">&times;</button>
     <video id="fullVideo" controls autoplay>
-      <source src="https://cdn.example.com/video.mp4" type="video/mp4">
-      Your browser does not support the video tag.
+      <source src="" type="video/mp4">
+      Browser kamu tidak mendukung video.
     </video>
   </div>
 </div>
+<!-- Import JS video -->
+<script src="videos_short.js"></script>
+<script src="videos_long.js"></script>
+<script src="videos_popular.js"></script>
 <script>
-  // Button logic for modal
+  // --- Modal logic ---
   const playBtn = document.getElementById('playBtn');
   const videoModal = document.getElementById('videoModal');
   const closeModal = document.getElementById('closeModal');
   const fullVideo = document.getElementById('fullVideo');
   const preview = document.getElementById('preview');
+  let currentVideoUrl = "";
 
-  // Play button opens modal and plays video
   playBtn.onclick = function() {
-    videoModal.style.display = 'flex';
-    fullVideo.currentTime = 0;
+    if (!currentVideoUrl) return;
+    fullVideo.querySelector('source').src = currentVideoUrl;
+    fullVideo.load();
     fullVideo.play();
+    videoModal.style.display = 'flex';
   };
-  // Close modal
   closeModal.onclick = function() {
     videoModal.style.display = 'none';
     fullVideo.pause();
   };
-  // Close modal when clicking outside modal-content
   window.onclick = function(event) {
     if (event.target == videoModal) {
       videoModal.style.display = 'none';
@@ -235,7 +206,7 @@
     }
   };
 
-  // Load video lists (stub function, connect with your JS files)
+  // Kategori menu
   const navButtons = document.querySelectorAll('.nav-right button');
   const videoList = document.getElementById('videoList');
   navButtons.forEach(btn => {
@@ -247,24 +218,55 @@
     }
   });
 
+  function getArrayByType(type) {
+    if (type === 'short' && window.videosShort) return window.videosShort;
+    if (type === 'long' && window.videosLong) return window.videosLong;
+    if (type === 'popular' && window.videosPopular) return window.videosPopular;
+    return [];
+  }
+
   function loadVideoList(type) {
-    // You can replace the below block with your actual JS logic:
-    // For example: window.loadVideosShort(), window.loadVideosLong(), etc.
-    videoList.innerHTML = '';
-    if (type === 'short') {
-      // Example: Call your videos_short.js here
-      videoList.innerHTML = `<div style="margin:22px auto;color:#ccc;">Short clips will be listed here.</div>`;
-    } else if (type === 'long') {
-      // Example: Call your videos_long.js here
-      videoList.innerHTML = `<div style="margin:22px auto;color:#ccc;">Long clips will be listed here.</div>`;
-    } else if (type === 'popular') {
-      // Example: Call your videos_popular.js here
-      videoList.innerHTML = `<div style="margin:22px auto;color:#ccc;">Popular clips will be listed here.</div>`;
+    let listArr = getArrayByType(type);
+    let html = '<ul>';
+    if (listArr.length === 0) {
+      html += `<li><span style="color:#ccc;">Belum ada video untuk kategori ini.</span></li>`;
+    }
+    listArr.forEach((vid, i) => {
+      html += `
+        <li>
+          <button class="vid-item" data-url="${vid.url}">${vid.title}</button>
+        </li>
+      `;
+    });
+    html += '</ul>';
+    videoList.innerHTML = html;
+    // Klik pada video item
+    document.querySelectorAll('.vid-item').forEach(btn => {
+      btn.onclick = function() {
+        setPreviewVideo(btn.getAttribute('data-url'));
+      }
+    });
+    // Otomatis preview video pertama
+    if (listArr.length > 0) setPreviewVideo(listArr[0].url);
+    else setPreviewVideo("");
+  }
+
+  function setPreviewVideo(url) {
+    currentVideoUrl = url;
+    preview.querySelector('source').src = url;
+    preview.load();
+    // Jika modal terbuka, update juga
+    if (videoModal.style.display === 'flex') {
+      fullVideo.querySelector('source').src = url;
+      fullVideo.load();
+      fullVideo.play();
     }
   }
 
-  // Initial load (short)
-  loadVideoList('short');
+  // Load awal (short)
+  window.onload = function() {
+    loadVideoList('short');
+  };
 </script>
 </body>
 </html>
