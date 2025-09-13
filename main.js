@@ -40,7 +40,8 @@ function renderGrid() {
 function createVideoCard(vid, thumbUrl, idx) {
   const card = document.createElement('div');
   card.className = 'video-card';
-  // THUMBNAIL + preview 1 second on hover
+  card.tabIndex = 0;
+  // THUMBNAIL + preview 1 second on tap/click
   const thumbCont = document.createElement('div');
   thumbCont.className = 'thumbnail-container';
   const thumbVid = document.createElement('video');
@@ -49,7 +50,7 @@ function createVideoCard(vid, thumbUrl, idx) {
   thumbVid.playsInline = true;
   thumbVid.preload = "metadata";
   thumbVid.poster = ""; // add image thumbnail if available
-  thumbVid.style.pointerEvents = "none";
+  thumbVid.setAttribute("loading", "lazy");
   thumbCont.appendChild(thumbVid);
 
   // Overlay play button
@@ -57,26 +58,26 @@ function createVideoCard(vid, thumbUrl, idx) {
   overlay.className = 'thumbnail-overlay';
   const playBtn = document.createElement('button');
   playBtn.className = 'play-overlay-btn';
-  playBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-    <circle cx="14" cy="14" r="14" fill="#e50914"/>
-    <polygon points="11,9 21,14 11,19" fill="#fff"/>
+  playBtn.innerHTML = `<svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+    <circle cx="18" cy="18" r="18" fill="#e50914"/>
+    <polygon points="15,12 27,18 15,24" fill="#fff"/>
   </svg>`;
   overlay.appendChild(playBtn);
 
-  // Preview 1 second on hover
-  thumbCont.onmouseenter = () => {
+  // Preview 1 second on tap/click
+  let previewing = false;
+  function previewPlay() {
+    if (previewing) return;
+    previewing = true;
     thumbVid.currentTime = 0;
     thumbVid.play();
-    setTimeout(() => { thumbVid.pause(); thumbVid.currentTime = 0; }, 1000);
-  };
-  thumbCont.onmouseleave = () => { thumbVid.pause(); thumbVid.currentTime = 0; };
-
-  // Modal play
+    setTimeout(() => { thumbVid.pause(); thumbVid.currentTime = 0; previewing = false; }, 1000);
+  }
+  thumbCont.onclick = previewPlay;
   playBtn.onclick = (e) => {
     e.stopPropagation();
     showModal(vid.url);
   };
-
   thumbCont.appendChild(overlay);
 
   // Title
@@ -98,10 +99,18 @@ function showModal(url) {
   fullVideo.load();
   fullVideo.play();
   videoModal.style.display = 'flex';
+  closeModal.focus();
+  injectAdModal();
 }
 closeModal.onclick = function() {
   videoModal.style.display = 'none';
   fullVideo.pause();
+};
+closeModal.onkeydown = function(e) {
+  if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
+    videoModal.style.display = 'none';
+    fullVideo.pause();
+  }
 };
 window.onclick = function(event) {
   if (event.target == videoModal) {
@@ -109,5 +118,22 @@ window.onclick = function(event) {
     fullVideo.pause();
   }
 };
+
+// --- Ensure ad in modal always visible and reloads ---
+function injectAdModal() {
+  const adModalTop = document.getElementById('adModalTop');
+  adModalTop.innerHTML = `
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
+  `;
+}
 
 window.onload = function() { renderGrid(); };
