@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GCiHub+</title>
+  <title>VideoHub</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <div class="header-row">
       <div class="nav-left">
-        <h1>GCi</h1>
-        <p>GCiHub+<br>Short & Long clips — streaming from CDN</p>
+        <h1>VH</h1>
+        <p>VideoHub<br>Short & Long clips — streaming from CDN</p>
       </div>
       <div class="nav-right">
         <button class="active" data-type="short">Short</button>
@@ -57,13 +57,25 @@
     </div>
     <div class="privacy">
       <b>Privacy:</b> No personal data is collected. LocalStorage may be used for UX only (age gate).<br>
-      © 2025 GCiHub+
+      © 2025 VideoHub
     </div>
   </div>
   <!-- Modal for player -->
   <div id="videoModal" class="modal" aria-modal="true" role="dialog" tabindex="-1">
     <div class="modal-content">
-      <div class="ad-modal-top" id="adModalTop"></div>
+      <div class="ad-modal-top" id="adModalTop">
+        <!-- Modal ad code, must be IN HTML, not via JS -->
+        <script type="text/javascript">
+          atOptions = {
+            'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
+      </div>
       <button id="closeModal" class="close-btn" title="Close" tabindex="0" aria-label="Close video">&times;</button>
       <div class="modal-spinner" id="modalSpinner"></div>
       <video id="fullVideo" controls preload="metadata" playsinline>
