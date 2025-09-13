@@ -23,7 +23,7 @@
       <input type="text" id="searchInput" placeholder="Search videos...">
     </div>
   </header>
-  <!-- AD TOP -->
+  <!-- Ad Top (outside modal) -->
   <div class="ad-top">
     <!-- Top ad code -->
     <script type="text/javascript">
@@ -40,7 +40,6 @@
   <main>
     <div class="netflix-grid" id="videoGrid"></div>
   </main>
-  <!-- AD BOTTOM -->
   <div class="ad-bottom">
     <!-- Bottom ad code -->
     <script type="text/javascript">
@@ -66,27 +65,15 @@
   <!-- Modal for player -->
   <div id="videoModal" class="modal">
     <div class="modal-content">
-      <div class="ad-modal-top">
-        <!-- Modal top ad code -->
-        <script type="text/javascript">
-          atOptions = {
-            'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-          };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
-      </div>
-      <button id="closeModal" class="close-btn" title="Close">&times;</button>
-      <video id="fullVideo" controls autoplay>
+      <div class="ad-modal-top" id="adModalTop"></div>
+      <button id="closeModal" class="close-btn" title="Close" tabindex="0">&times;</button>
+      <video id="fullVideo" controls preload="metadata" playsinline>
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
   </div>
-  <!-- Import JS video lists -->
+  <!-- JS video lists and main logic -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
