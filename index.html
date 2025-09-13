@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VideoHub</title>
+  <title>VideoHub Final</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -61,9 +61,9 @@
     </div>
   </div>
   <!-- Modal for player -->
-  <div id="videoModal" class="modal" aria-modal="true" role="dialog" tabindex="-1">
+  <div id="videoModal" class="modal">
     <div class="modal-content">
-      <div class="ad-modal-top" id="adModalTop">
+      <div class="ad-modal-top">
         <!-- Modal ad code, must be IN HTML, not via JS -->
         <script type="text/javascript">
           atOptions = {
@@ -77,14 +77,12 @@
         <script type="text/javascript" src="//www.highperformanceformat.com/4a2fc598ebbbdbc95eb3bef73798c939/invoke.js"></script>
       </div>
       <button id="closeModal" class="close-btn" title="Close" tabindex="0" aria-label="Close video">&times;</button>
-      <div class="modal-spinner" id="modalSpinner"></div>
       <video id="fullVideo" controls preload="metadata" playsinline>
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
   </div>
-  <!-- JS video lists and main logic -->
   <script src="videos_short.js"></script>
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
