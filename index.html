@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GCi TUBE</title>
+  <title>GCiHub+</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,7 @@
     <div class="header-row">
       <div class="nav-left">
         <h1>GCi</h1>
-        <p>GCi TUBE<br>Short & Long clips — streaming from CDN</p>
+        <p>GCiHub+<br>Short & Long clips — streaming from CDN</p>
       </div>
       <div class="nav-right">
         <button class="active" data-type="short">Short</button>
@@ -25,7 +25,6 @@
   </header>
   <!-- Ad Top (outside modal) -->
   <div class="ad-top">
-    <!-- Top ad code -->
     <script type="text/javascript">
       atOptions = {
         'key' : '4a2fc598ebbbdbc95eb3bef73798c939',
@@ -41,7 +40,6 @@
     <div class="netflix-grid" id="videoGrid"></div>
   </main>
   <div class="ad-bottom">
-    <!-- Bottom ad code -->
     <script type="text/javascript">
       atOptions = {
         'key' : '97769e31ab76979e0ee340bc5c857351',
@@ -59,13 +57,15 @@
     </div>
     <div class="privacy">
       <b>Privacy:</b> No personal data is collected. LocalStorage may be used for UX only (age gate).<br>
-      © 2025 VideoHub
+      © 2025 GCiHub+
     </div>
   </div>
   <!-- Modal for player -->
-  <div id="videoModal" class="modal">
+  <div id="videoModal" class="modal" aria-modal="true" role="dialog" tabindex="-1">
     <div class="modal-content">
-      <button id="closeModal" class="close-btn" title="Close" tabindex="0">&times;</button>
+      <div class="ad-modal-top" id="adModalTop"></div>
+      <button id="closeModal" class="close-btn" title="Close" tabindex="0" aria-label="Close video">&times;</button>
+      <div class="modal-spinner" id="modalSpinner"></div>
       <video id="fullVideo" controls preload="metadata" playsinline>
         <source src="" type="video/mp4">
         Your browser does not support the video tag.
@@ -77,5 +77,6 @@
   <script src="videos_long.js"></script>
   <script src="videos_popular.js"></script>
   <script src="main.js"></script>
+  <script src="antitheft.js"></script>
 </body>
 </html>
